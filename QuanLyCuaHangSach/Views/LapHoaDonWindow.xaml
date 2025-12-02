@@ -131,7 +131,7 @@
 
                     <!--Bảng dữ liệu-->
                     <DataGrid Grid.Row="0" x:Name="dgvLapHoaDon"
-                              Margin="5" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="dgvLapHoaDon_SelectionChanged">
+                              Margin="5" AutoGenerateColumns="True" IsReadOnly="True" SelectionChanged="dgvLapHoaDon_SelectionChanged">
                     </DataGrid>
                     
                     <!--Thanh toán-->

@@ -129,8 +129,7 @@
                     
                     <!--Bảng dữ liệu-->
                     <DataGrid Grid.Row="1" x:Name="dgvKhachHang" 
-                              Margin="5" AutoGenerateColumns="True" IsReadOnly="True"
-                              SelectionChanged="dgvKhachHang_SelectionChanged">
+                              Margin="5" AutoGenerateColumns="True" IsReadOnly="True" SelectionChanged="dgvKhachHang_SelectionChanged">
                     </DataGrid>
                 </Grid>
             </materialDesign:Card>
