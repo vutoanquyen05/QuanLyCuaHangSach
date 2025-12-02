@@ -41,6 +41,7 @@ namespace QuanLyCuaHangSach.Views
         public LapHoaDonWindow()
         {
             InitializeComponent();
+            XuLyDuLieu();
         }
 
         private void XuLyDuLieu()
