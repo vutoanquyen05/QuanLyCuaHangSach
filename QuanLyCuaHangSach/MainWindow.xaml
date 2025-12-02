@@ -151,7 +151,7 @@
             <!--Main-->
             <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
 
@@ -161,8 +161,8 @@
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"></RowDefinition>
-                            <RowDefinition MaxHeight="200"></RowDefinition>
-                            <RowDefinition MaxHeight="200"></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
 
                         <!--Lọc-->
@@ -188,7 +188,7 @@
 
                         <!--Bảng dữ liệu-->
                         <DataGrid Grid.Row="2" x:Name="dgvKhachHang" 
-                              Margin="5" AutoGenerateColumns="True" IsReadOnly="True">
+                              Margin="5" HorizontalAlignment="Stretch" AutoGenerateColumns="True" IsReadOnly="True">
                         </DataGrid>
                     </Grid>
                 </materialDesign:Card>
@@ -225,21 +225,9 @@
                         </Grid>
 
                         <!--Bảng dữ liệu-->
-                        <Grid Grid.Row="2">
-                            <ScrollViewer VerticalScrollBarVisibility="Auto">
-                                <ListView>
-                                    <ListView.View>
-                                        <GridView>
-                                            <GridViewColumn Header="Mã sách"></GridViewColumn>
-                                            <GridViewColumn Header="Tên sách"></GridViewColumn>
-                                            <GridViewColumn Header="Giá bán"></GridViewColumn>
-                                            <GridViewColumn Header="Số lượng"></GridViewColumn>
-                                            <GridViewColumn Header="Mã loại"></GridViewColumn>
-                                        </GridView>
-                                    </ListView.View>
-                                </ListView>
-                            </ScrollViewer>
-                        </Grid>
+                        <DataGrid Grid.Row="2" x:Name="dgvSach"
+                              Margin="5" HorizontalAlignment="Stretch" AutoGenerateColumns="True" IsReadOnly="True">
+                        </DataGrid>
                     </Grid>
                 </materialDesign:Card>
             </Grid>
