@@ -1,0 +1,61 @@
+﻿<UserControl x:Class="QuanLyCuaHangSach.Controls.ControlBarUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:QuanLyCuaHangSach.Controls"
+             mc:Ignorable="d"
+             
+             xmlns:uc="clr-namespace:QuanLyCuaHangSach.Controls"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+             TextElement.FontWeight="Regular"
+             TextElement.FontSize="13"
+             TextOptions.TextFormattingMode="Ideal"
+             TextOptions.TextRenderingMode="Auto"
+             Background="{DynamicResource MaterialDesignPaper}"
+             FontFamily="{DynamicResource MaterialDesignFont}"
+             
+             Name="ucControlBar">
+
+    <Grid Name="ControlBar" MouseLeftButtonDown="ControlBar_MouseLeftButtonDown">
+        <materialDesign:ColorZone Background="	#7E57C2">
+            <DockPanel>
+                <StackPanel DockPanel.Dock="Right"  Background="Transparent" Orientation="Horizontal">
+                    <StackPanel.Resources>
+                        <Style TargetType="Button">
+                            <Setter Property="Margin" Value="0"></Setter>
+                            <Setter Property="Width" Value="40"></Setter>
+                            <Setter Property="Background" Value="Transparent"></Setter>
+                            <Setter Property="Foreground" Value="White"></Setter>
+                            <Setter Property="BorderThickness" Value="0"></Setter>
+                        </Style>
+                    </StackPanel.Resources>
+                    <Button Click="btnThuNho_Click"
+                            Name="btnThuNho" ToolBar.OverflowMode="AsNeeded">
+                        <materialDesign:PackIcon Kind="WindowMinimize" />
+                    </Button>
+                    <Button Click="btnPhongTo_Click"
+                            Name="btnPhongTo" ToolBar.OverflowMode="AsNeeded">
+                        <materialDesign:PackIcon Kind="WindowMaximize" />
+                    </Button>
+                    <Button Click="btnDong_Click"
+                            Name="btnDong" ToolBar.OverflowMode="AsNeeded">
+                        <materialDesign:PackIcon Kind="WindowClose" />
+                    </Button>
+                </StackPanel>
+
+                <StackPanel DockPanel.Dock="Left" Orientation="Horizontal">
+                    <!--ToggleButton-->
+                    <!--<ToggleButton Foreground="White"
+                                  Style="{DynamicResource MaterialDesignHamburgerToggleButton}" />-->
+
+                    <!--Window Text-->
+                    <TextBlock Text="{Binding Tag, ElementName=ucControlBar}"
+                               FontSize="20" Foreground="White"
+                               Margin="15 0 0 0" VerticalAlignment="Center"></TextBlock>
+                </StackPanel>
+            </DockPanel>
+        </materialDesign:ColorZone>
+    </Grid>
+</UserControl>

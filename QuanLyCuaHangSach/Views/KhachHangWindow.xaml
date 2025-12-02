@@ -1,0 +1,139 @@
+﻿<Window x:Class="QuanLyCuaHangSach.Views.KhachHangWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:QuanLyCuaHangSach.Views"
+        mc:Ignorable="d"
+        
+        xmlns:uc="clr-namespace:QuanLyCuaHangSach.Controls"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Style="{StaticResource MaterialDesignWindow}"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        x:Name="window"
+        
+        Title="Khách Hàng"
+        Width="850" Height="500">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <!--ControlBar-->
+        <Grid Grid.Row="0">
+            <uc:ControlBarUC Tag="{Binding Title, ElementName=window}"></uc:ControlBarUC>
+        </Grid>
+
+        <!--Window-->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="350"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <!--Main-->
+            <materialDesign:Card Grid.Column="0" Margin="5 5 0 5">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <!--Title-->
+                    <TextBlock Grid.Row="0" Text="THÔNG TIN KHÁCH HÀNG" 
+                        FontWeight="Bold" FontSize="20" 
+                        Margin="10" HorizontalAlignment="Left"/>
+
+                    <!--Thông tin nhập-->
+                    <StackPanel Grid.Row="1">
+                        <TextBox x:Name="txtMaKH" materialDesign:HintAssist.Hint="Mã khách hàng"
+                             Margin="10 5" Width="250" Height="35" MaxWidth="250"
+                             VerticalAlignment="Center" HorizontalAlignment="Left"
+                             TextWrapping="Wrap"
+                             IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignFilledTextBoxEnabledComboBox}"/>
+                        <TextBox x:Name="txtTenKH" materialDesign:HintAssist.Hint="Họ và tên"
+                             Margin="10 5" Width="250" Height="35" MaxWidth="250"
+                             VerticalAlignment="Center" HorizontalAlignment="Left"
+                             TextWrapping="Wrap"
+                             IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignFilledTextBoxEnabledComboBox}"/>
+                        <TextBox x:Name="txtSDT" materialDesign:HintAssist.Hint="Số điện thoại"
+                             Margin="10 5" Width="250" Height="35" MaxWidth="250"
+                             VerticalAlignment="Center" HorizontalAlignment="Left"
+                             TextWrapping="Wrap"
+                             IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignFilledTextBoxEnabledComboBox}"/>
+                        <TextBox x:Name="txtDiaChi" materialDesign:HintAssist.Hint="Địa chỉ"
+                             Margin="10 5" Width="250" Height="35" MaxWidth="250"
+                             VerticalAlignment="Center" HorizontalAlignment="Left"
+                             TextWrapping="Wrap"
+                             IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignFilledTextBoxEnabledComboBox}"/>
+                    </StackPanel>
+
+                    <!--Nút chức năng-->
+                    <StackPanel Grid.Row="2" Margin="0 15" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center">
+                        <Button x:Name="btnThem" Content="Thêm" Click="btnThem_Click"
+                                Width="70" Margin="5"/>
+                        <Button x:Name="btnSua" Content="Sửa" Click="btnSua_Click"
+                                Width="70" Margin="5"/>
+                        <Button x:Name="btnXoa" Content="Xóa" Click="btnXoa_Click"
+                                Width="70" Margin="5"/>
+                        <Button x:Name="btnLamMoi" Content="Làm mới" Click="btnLamMoi_Click"
+                                Width="90" Margin="5"/>
+                    </StackPanel>
+                </Grid>
+            </materialDesign:Card>
+
+            <!--Dữ liệu-->
+            <materialDesign:Card Grid.Column="1" Margin="0 5">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <!--Lọc-->
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        
+                        <!--Thông tin cần lọc-->
+                        <TextBox Grid.Column="0" materialDesign:HintAssist.Hint="Mã khách hàng"
+                             Width="120" Height="40" Margin="5 0" MaxWidth="120" MaxHeight="40"
+                             TextWrapping="Wrap"
+                             IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignFilledTextBoxEnabledComboBox}"
+                             Style="{StaticResource MaterialDesignFilledTextBox}"/>
+                        <TextBox Grid.Column="1" materialDesign:HintAssist.Hint="Họ và tên"
+                             Width="175" Height="40" Margin="5 0" MaxWidth="175" MaxHeight="40"
+                             TextWrapping="Wrap"
+                             IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignFilledTextBoxEnabledComboBox}"
+                             Style="{StaticResource MaterialDesignFilledTextBox}"/>
+                        
+                        <!--Nút-->
+                        <Button Grid.Column="2" x:Name="btnTimMaNV" Content="Lọc" 
+                                Margin="10 0" Width="80" Height="35" HorizontalAlignment="Right"/>
+                    </Grid>
+                    
+                    <!--Bảng dữ liệu-->
+                    <DataGrid Grid.Row="1" x:Name="dgvKhachHang" 
+                              Margin="5" AutoGenerateColumns="True" IsReadOnly="True"
+                              SelectionChanged="dgvKhachHang_SelectionChanged">
+                    </DataGrid>
+                </Grid>
+            </materialDesign:Card>
+        </Grid>
+    </Grid>
+</Window>
