@@ -187,20 +187,9 @@
                         </Grid>
 
                         <!--Bảng dữ liệu-->
-                        <Grid Grid.Row="2">
-                            <ScrollViewer VerticalScrollBarVisibility="Auto">
-                                <ListView>
-                                    <ListView.View>
-                                        <GridView>
-                                            <GridViewColumn Header="Mã KH"></GridViewColumn>
-                                            <GridViewColumn Header="Tên khách hàng"></GridViewColumn>
-                                            <GridViewColumn Header="SĐT"></GridViewColumn>
-                                            <GridViewColumn Header="Địa chỉ"></GridViewColumn>
-                                        </GridView>
-                                    </ListView.View>
-                                </ListView>
-                            </ScrollViewer>
-                        </Grid>
+                        <DataGrid Grid.Row="2" x:Name="dgvKhachHang" 
+                              Margin="5" AutoGenerateColumns="True" IsReadOnly="True">
+                        </DataGrid>
                     </Grid>
                 </materialDesign:Card>
 
