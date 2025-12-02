@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace QuanLyCuaHangSach.Models
 {
-    internal class NhanVien
+    public class NhanVien
     {
         public string MaNV { get; set; }
         public string TenNV { get; set; }

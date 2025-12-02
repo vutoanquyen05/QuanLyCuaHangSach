@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace QuanLyCuaHangSach.Models
 {
-    internal class KhachHang
+    public class KhachHang
     {
         public string MaKH { get; set; }
         public string TenKH { get; set; }

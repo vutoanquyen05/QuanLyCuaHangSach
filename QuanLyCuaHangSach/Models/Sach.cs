@@ -20,7 +20,7 @@ namespace QuanLyCuaHangSach.Models
         public override string ToString()
         {
             // Sử dụng InvariantCulture để đảm bảo dấu thập phân là '.' khi ghi file
-            return $"{MaSach},{TenSach},{MaTG},{MaNXB},{GiaBan.ToString(CultureInfo.InvariantCulture)},{TonKho}";
+            return $"{MaSach},{TenSach},{MaTG},{MaNXB},{GiaBan.ToString(CultureInfo.InvariantCulture)},{SoLuong}";
         }
 
         // Phương thức tạo đối tượng từ chuỗi CSV (cần cho Xử Lý)
@@ -40,4 +40,5 @@ namespace QuanLyCuaHangSach.Models
                 SoLuong = int.Parse(parts[5])
             };
         }
+    }
 }
