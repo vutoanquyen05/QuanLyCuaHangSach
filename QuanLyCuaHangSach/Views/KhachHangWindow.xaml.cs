@@ -28,11 +28,9 @@ namespace QuanLyCuaHangSach.Views
         }
         private void window_Loaded(object sender, RoutedEventArgs e)
         {
+            TruyCapDuLieu.docFile("KHACHHANG.txt");
+            HienThiDSKhachHang();
             xuLyKhachHang = new XuLyKhachHang();
-            if (TruyCapDuLieu.docFile("SACH.txt"))
-                HienThiDSKhachHang();
-            else
-                MessageBox.Show("Không thể đọc file SACH.txt");
         }
         private void HienThiDSKhachHang()
         {

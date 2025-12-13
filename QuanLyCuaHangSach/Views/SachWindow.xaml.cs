@@ -39,11 +39,10 @@ namespace QuanLyCuaHangSach.Views
 
         private void window_Loaded(object sender, RoutedEventArgs e)
         {
+            TruyCapDuLieu.docFile("SACH.txt");
+            HienThiDSSach();
             xuLySach = new XuLySach();
-            if (TruyCapDuLieu.docFile("SACH.txt"))
-                HienThiDSSach();
-            else
-                MessageBox.Show("Không thể đọc file SACH.txt");
+
         }
 
         private void btnThem_Click(object sender, RoutedEventArgs e)

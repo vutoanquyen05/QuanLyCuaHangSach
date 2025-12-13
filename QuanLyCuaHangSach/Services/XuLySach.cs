@@ -19,7 +19,7 @@ namespace QuanLyCuaHangSach.Services
         }
         public List<Sach> getDSSach()
         {
-            return this.dsSach;
+            return dsSach;
         }
         public bool KiemTraMaSach(string maSach)
         {

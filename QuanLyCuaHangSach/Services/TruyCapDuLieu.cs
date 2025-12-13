@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace QuanLyCuaHangSach.Services
 {
+    [Serializable]
     internal class TruyCapDuLieu
     {
         private static TruyCapDuLieu instance = null;
@@ -18,20 +19,19 @@ namespace QuanLyCuaHangSach.Services
         private List<HoaDon> dsHoaDon;
         private List<ChiTietHoaDon> dsChiTietHoaDon;
 
-        public static TruyCapDuLieu khoiTao()
-        {
-            if (instance == null)
-                instance = new TruyCapDuLieu();
-            return instance;
-        }
-
-        public TruyCapDuLieu()
+        private TruyCapDuLieu()
         {
             dsSach = new List<Sach>();
             dsKhachHang = new List<KhachHang>();
             dsNhanVien = new List<NhanVien>();
             dsHoaDon = new List<HoaDon>();
             dsChiTietHoaDon = new List<ChiTietHoaDon>();
+        }
+        public static TruyCapDuLieu khoiTao()
+        {
+            if (instance == null)
+                instance = new TruyCapDuLieu();
+            return instance;
         }
 
         public List<Sach> getDSSach()
