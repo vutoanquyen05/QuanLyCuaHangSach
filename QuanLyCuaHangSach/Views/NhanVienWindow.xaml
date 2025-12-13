@@ -20,6 +20,7 @@
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
         x:Name="window"
+        Loaded="window_Loaded"
         
         Title="Nhân Viên"
         Width="850" Height="500">

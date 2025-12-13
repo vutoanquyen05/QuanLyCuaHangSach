@@ -21,76 +21,88 @@ namespace QuanLyCuaHangSach.Views
     /// </summary>
     public partial class NhanVienWindow : Window
     {
-        private List<NhanVien> dsNhanVien;
+        private XuLyNhanVien xuLyNhanVien;
         public NhanVienWindow()
         {
             InitializeComponent();
-            XuLyDuLieu();
-        }
-        private void XuLyDuLieu()
-        {
-            dsNhanVien = DataService.XuLyNhanVien();
-            dgvNhanVien.ItemsSource = null;
-            dgvNhanVien.ItemsSource = dsNhanVien;
         }
 
-        private void LamMoi()
+        private void window_Loaded(object sender, RoutedEventArgs e)
         {
-            txtMaNV.Clear(); txtTenNV.Clear(); txtChucVu.Clear(); txtSDT.Clear(); txtMaQL.Clear();
-            txtMaNV.Focus();
+            xuLyNhanVien = new XuLyNhanVien();
+            if (TruyCapDuLieu.docFile("NHANVIEN.txt"))
+                HienThiDSNhanVien();
+            else
+                MessageBox.Show("Không thể đọc file NHANVIEN.txt");
+        }
+
+        private void HienThiDSNhanVien()
+        {
+            List<NhanVien> dsNhanVien = TruyCapDuLieu.khoiTao().getDSNhanVien();
+            dgvNhanVien.ItemsSource = null;
+            dgvNhanVien.ItemsSource = dsNhanVien.ToList();
         }
 
         private void btnThem_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtMaNV.Text)) { MessageBox.Show("Nhập Mã NV đi bạn ơi!"); return; }
-            if (dsNhanVien.Any(x => x.MaNV == txtMaNV.Text)) { MessageBox.Show("Mã này có rồi!"); return; }
-
-            var nvMoi = new NhanVien
+            if (string.IsNullOrWhiteSpace(txtMaNV.Text))
             {
-                MaNV = txtMaNV.Text,
-                TenNV = txtTenNV.Text,
-                ChucVu = txtChucVu.Text,
-                SDT = txtSDT.Text,
-                MaQL = txtMaQL.Text
-            };
+                MessageBox.Show("Vui lòng nhập mã nhân viên");
+                return;
+            }
 
-            dsNhanVien.Add(nvMoi);
-            DataService.LuuNhanVien(dsNhanVien); // Lưu luôn
-            XuLyDuLieu();
-            LamMoi();
-            MessageBox.Show("Thêm nhân viên thành công!");
+            NhanVien nhanVienMoi = new NhanVien(txtMaNV.Text, txtTenNV.Text, txtChucVu.Text, txtSDT.Text, txtMaQL.Text);
+            bool ketQuaThem = xuLyNhanVien.Them(nhanVienMoi);
+            if (ketQuaThem)
+            {
+                MessageBox.Show("Thêm nhân viên thành công!");
+                TruyCapDuLieu.ghiFile("NHANVIEN.txt");
+                HienThiDSNhanVien();
+            }
+            else MessageBox.Show("Mã nhân viên đã tồn tại");
         }
 
         private void btnSua_Click(object sender, RoutedEventArgs e)
         {
-            var nv = dsNhanVien.FirstOrDefault(x => x.MaNV == txtMaNV.Text);
-            if (nv == null) { MessageBox.Show("Không tìm thấy NV này"); return; }
-
-            nv.TenNV = txtTenNV.Text;
-            nv.ChucVu = txtChucVu.Text;
-            nv.SDT = txtSDT.Text;
-            nv.MaQL = txtMaQL.Text;
-
-            DataService.LuuNhanVien(dsNhanVien);
-            XuLyDuLieu();
-            MessageBox.Show("Sửa xong rồi nha!");
+            if (dgvNhanVien.SelectedItem is NhanVien nhanVienCu)
+            {
+                NhanVien nhanVienMoi = new NhanVien(txtMaNV.Text, txtTenNV.Text, txtChucVu.Text, txtSDT.Text, txtMaQL.Text);
+                bool ketQuaSua = xuLyNhanVien.Sua(nhanVienCu, nhanVienMoi);
+                if (ketQuaSua)
+                {
+                    MessageBox.Show("Sửa nhân viên thành công!");
+                    TruyCapDuLieu.ghiFile("NHANVIEN.txt");
+                    HienThiDSNhanVien();
+                }
+                else MessageBox.Show("Sửa nhân viên thất bại!");
+            }
+            else MessageBox.Show("Vui lòng chọn nhân viên cần sửa!");
         }
 
         private void btnXoa_Click(object sender, RoutedEventArgs e)
         {
-            var nv = dsNhanVien.FirstOrDefault(x => x.MaNV == txtMaNV.Text);
-            if (nv != null && MessageBox.Show("Xóa thật không?", "Hỏi nhỏ", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            if (dgvNhanVien.SelectedItem is NhanVien nhanVien)
             {
-                dsNhanVien.Remove(nv);
-                DataService.LuuNhanVien(dsNhanVien);
-                XuLyDuLieu();
-                LamMoi();
+                bool ketQuaXoa = xuLyNhanVien.Xoa(nhanVien);
+                if (ketQuaXoa)
+                {
+                    MessageBox.Show("Xóa nhân viên thành công!");
+                    TruyCapDuLieu.ghiFile("NHANVIEN.txt");
+                    HienThiDSNhanVien();
+                }
+                else MessageBox.Show("Xóa nhân viên thất bại!");
             }
+            else MessageBox.Show("Vui lòng chọn nhân viên cần xóa!");
         }
 
         private void btnLamMoi_Click(object sender, RoutedEventArgs e)
         {
-            LamMoi();
+            txtMaNV.Clear();
+            txtTenNV.Clear();
+            txtChucVu.Clear();
+            txtSDT.Clear();
+            txtMaQL.Clear();
+            txtMaNV.Focus();
         }
 
         private void dgvNhanVien_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -100,7 +112,7 @@ namespace QuanLyCuaHangSach.Views
                 txtMaNV.Text = select.MaNV;
                 txtTenNV.Text = select.TenNV;
                 txtChucVu.Text = select.ChucVu;
-                txtSDT.Text = select.SDT;
+                txtSDT.Text = select.SoDienThoai;
                 txtMaQL.Text = select.MaQL;
             }
         }

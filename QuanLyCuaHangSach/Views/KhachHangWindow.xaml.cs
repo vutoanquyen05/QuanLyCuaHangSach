@@ -21,92 +21,94 @@ namespace QuanLyCuaHangSach.Views
     /// </summary>
     public partial class KhachHangWindow : Window
     {
-        private List<KhachHang> dsKhachHang;
+        private XuLyKhachHang xuLyKhachHang;
         public KhachHangWindow()
         {
             InitializeComponent();
-            XuLyDuLieu();
         }
-        private void XuLyDuLieu()
+        private void window_Loaded(object sender, RoutedEventArgs e)
         {
-            dsKhachHang = DataService.XuLyKhachHang();
-            dgvKhachHang.ItemsSource = null; // Reset
-            dgvKhachHang.ItemsSource = dsKhachHang;
+            xuLyKhachHang = new XuLyKhachHang();
+            if (TruyCapDuLieu.docFile("SACH.txt"))
+                HienThiDSKhachHang();
+            else
+                MessageBox.Show("Không thể đọc file SACH.txt");
         }
-
-        private void LamMoi()
+        private void HienThiDSKhachHang()
         {
-            txtMaKH.Clear(); txtTenKH.Clear(); txtSDT.Clear(); txtDiaChi.Clear();
-            txtMaKH.Focus();
+            List<KhachHang> dsKhachHang = TruyCapDuLieu.khoiTao().getDSKhachHang();
+            dgvKhachHang.ItemsSource = null;
+            dgvKhachHang.ItemsSource = dsKhachHang.ToList();
         }
 
         private void btnThem_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtMaKH.Text)) { MessageBox.Show("Vui lòng nhập Mã KH"); return; }
-
-            // Kiểm tra trùng Mã
-            if (dsKhachHang.Any(x => x.MaKH == txtMaKH.Text))
+            if (string.IsNullOrWhiteSpace(txtMaKH.Text))
             {
-                MessageBox.Show("Mã Khách hàng này đã tồn tại!"); return;
+                MessageBox.Show("Vui lòng nhập mã khách hàng");
+                return;
             }
 
-            var khMoi = new KhachHang
+            KhachHang khachHangMoi = new KhachHang(txtMaKH.Text, txtTenKH.Text, txtSDT.Text, txtDiaChi.Text);
+            bool ketQuaThem = xuLyKhachHang.Them(khachHangMoi);
+            if (ketQuaThem)
             {
-                MaKH = txtMaKH.Text,
-                TenKH = txtTenKH.Text,
-                SDT = txtSDT.Text,
-                DiaChi = txtDiaChi.Text
-            };
-
-            dsKhachHang.Add(khMoi);
-            DataService.LuuKhachHang(dsKhachHang); // Lưu file ngay
-            XuLyDuLieu();
-            LamMoi();
-            MessageBox.Show("Thêm thành công!");
+                MessageBox.Show("Thêm khách hàng thành công!");
+                TruyCapDuLieu.ghiFile("KHACHHANG.txt");
+                HienThiDSKhachHang();
+            }
+            else MessageBox.Show("Mã khách hàng đã tồn tại");
         }
 
         private void btnSua_Click(object sender, RoutedEventArgs e)
         {
-            var khCanSua = dsKhachHang.FirstOrDefault(x => x.MaKH == txtMaKH.Text);
-            if (khCanSua == null) { MessageBox.Show("Không tìm thấy Mã KH để sửa"); return; }
-
-            khCanSua.TenKH = txtTenKH.Text;
-            khCanSua.SDT = txtSDT.Text;
-            khCanSua.DiaChi = txtDiaChi.Text;
-
-            DataService.LuuKhachHang(dsKhachHang);
-            XuLyDuLieu();
-            MessageBox.Show("Cập nhật thành công!");
+            if (dgvKhachHang.SelectedItem is KhachHang khachHangCu)
+            {
+                KhachHang khachHangMoi = new KhachHang(txtMaKH.Text, txtTenKH.Text, txtSDT.Text, txtDiaChi.Text);
+                bool ketQuaSua = xuLyKhachHang.Sua(khachHangCu, khachHangMoi);
+                if (ketQuaSua)
+                {
+                    MessageBox.Show("Sửa khách hàng thành công!");
+                    TruyCapDuLieu.ghiFile("KHACHHANG.TXT");
+                    HienThiDSKhachHang();
+                }
+                else MessageBox.Show("Sửa khách hàng thất bại!");
+            }
+            else MessageBox.Show("Vui lòng chọn khách hàng cần sửa!");
         }
 
         private void btnXoa_Click(object sender, RoutedEventArgs e)
         {
-            var khCanXoa = dsKhachHang.FirstOrDefault(x => x.MaKH == txtMaKH.Text);
-            if (khCanXoa != null)
+            if (dgvKhachHang.SelectedItem is KhachHang khachHang)
             {
-                if (MessageBox.Show("Bạn chắc chắn muốn xóa?", "Xác nhận", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                bool ketQuaXoa = xuLyKhachHang.Xoa(khachHang);
+                if (ketQuaXoa)
                 {
-                    dsKhachHang.Remove(khCanXoa);
-                    DataService.LuuKhachHang(dsKhachHang);
-                    XuLyDuLieu();
-                    LamMoi();
+                    MessageBox.Show("Xóa khách hàng thành công!");
+                    TruyCapDuLieu.ghiFile("KHACHHANG.TXT");
+                    HienThiDSKhachHang();
                 }
+                else MessageBox.Show("Xóa khách hàng thất bại!");
             }
+            else MessageBox.Show("Vui lòng chọn khách hàng cần xóa!");
         }
 
         private void btnLamMoi_Click(object sender, RoutedEventArgs e)
         {
-            LamMoi();
+            txtMaKH.Clear();
+            txtTenKH.Clear();
+            txtSDT.Clear();
+            txtDiaChi.Clear();
+            txtMaKH.Focus();
         }
 
-        // Chọn dòng trong bảng thì hiện lên ô nhập
         private void dgvKhachHang_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (dgvKhachHang.SelectedItem is KhachHang select)
             {
                 txtMaKH.Text = select.MaKH;
                 txtTenKH.Text = select.TenKH;
-                txtSDT.Text = select.SDT;
+                txtSDT.Text = select.SoDienThoai;
                 txtDiaChi.Text = select.DiaChi;
             }
         }

@@ -17,10 +17,43 @@ namespace QuanLyCuaHangSach.Services
             TruyCapDuLieu duLieu = TruyCapDuLieu.khoiTao();
             this.dsKhachHang = duLieu.getDSKhachHang();
         }
+        public bool KiemTraMaKhachHang(string maKH)
+        {
+            foreach (KhachHang khachHang in dsKhachHang)
+                if (khachHang.MaKH.Equals(maKH))
+                    return true;
+            return false;
+        }
         public bool Them(KhachHang khachHang)
         {
-            this.dsKhachHang.Add(khachHang);
-            return true;
+            if (khachHang == null) return false;
+            if (!KiemTraMaKhachHang(khachHang.MaKH))
+            {
+                dsKhachHang.Add(khachHang);
+                return true;
+            }
+            return false;
+        }
+        public bool Sua(KhachHang khachHangCu, KhachHang khachHangMoi)
+        {
+            if (khachHangCu == null || khachHangMoi == null) return false;
+            int viTri = dsKhachHang.IndexOf(khachHangCu);
+            if (viTri != -1)
+            {
+                dsKhachHang[viTri] = khachHangMoi;
+                return true;
+            }
+            return false;
+        }
+        public bool Xoa(KhachHang khachHang)
+        {
+            if (khachHang == null) return false;
+            if (dsKhachHang.Contains(khachHang))
+            {
+                dsKhachHang.Remove(khachHang);
+                return true;
+            }
+            return false;
         }
     }
 }

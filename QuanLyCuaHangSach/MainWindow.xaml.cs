@@ -1,5 +1,4 @@
-﻿using QuanLyCuaHangSach.DataStructures;
-using QuanLyCuaHangSach.Models;
+﻿using QuanLyCuaHangSach.Models;
 using QuanLyCuaHangSach.Services;
 using QuanLyCuaHangSach.Views;
 using System;
@@ -24,12 +23,33 @@ namespace QuanLyCuaHangSach
     /// </summary>
     public partial class MainWindow : Window
     {
-        private List<KhachHang> dsKhachHang;
-        private LinkedListSach dsSach;
         public MainWindow()
         {
             InitializeComponent();
-            XuLyDuLieu();
+        }
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (TruyCapDuLieu.docFile("KHACHHANG.txt"))
+                HienThiDSKhachHang();
+            else
+                MessageBox.Show("Không thể đọc file KHACHHANG.txt");
+
+            if (TruyCapDuLieu.docFile("SACH.txt"))
+                HienThiDSSach();
+            else
+                MessageBox.Show("Không thể đọc file SACH.txt");
+        }
+        private void HienThiDSSach()
+        {
+            List<Sach> dsSach = TruyCapDuLieu.khoiTao().getDSSach();
+            dgvSach.ItemsSource = null;
+            dgvSach.ItemsSource = dsSach.ToList();
+        }
+        private void HienThiDSKhachHang()
+        {
+            List<KhachHang> dsKhachHang = TruyCapDuLieu.khoiTao().getDSKhachHang();
+            dgvKhachHang.ItemsSource = null;
+            dgvKhachHang.ItemsSource = dsKhachHang.ToList();
         }
 
         private void btnKho_Click(object sender, RoutedEventArgs e)
@@ -64,18 +84,6 @@ namespace QuanLyCuaHangSach
         {
             LapHoaDonWindow window = new LapHoaDonWindow();
             window.Show();
-        }
-
-        private void XuLyDuLieu()
-        {
-            //Dữ liệu khách hàng
-            dsKhachHang = DataService.XuLyKhachHang();
-            dgvKhachHang.ItemsSource = null; // Reset
-            dgvKhachHang.ItemsSource = dsKhachHang;
-
-            //Dữ liệu sách
-            dsSach = DataService.XuLySach();
-            dgvSach.ItemsSource = dsSach.ToList();
         }
 
         private void btnLocSach_Click(object sender, RoutedEventArgs e)

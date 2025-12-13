@@ -1,5 +1,4 @@
-﻿using QuanLyCuaHangSach.DataStructures;
-using QuanLyCuaHangSach.Models;
+﻿using QuanLyCuaHangSach.Models;
 using QuanLyCuaHangSach.Services;
 using System;
 using System.Collections.Generic;
@@ -10,10 +9,12 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using MessageBox = System.Windows.MessageBox;
 
 namespace QuanLyCuaHangSach.Views
 {
@@ -22,19 +23,85 @@ namespace QuanLyCuaHangSach.Views
     /// </summary>
     public partial class SachWindow : Window
     {
-        private LinkedListSach dsSach;
+        private XuLySach xuLySach;
+
         public SachWindow()
         {
             InitializeComponent();
-            dsSach = DataService.XuLySach();
-            HienThiSach();
         }
-        private void HienThiSach()
+
+        private void HienThiDSSach()
         {
+            List<Sach> dsSach = TruyCapDuLieu.khoiTao().getDSSach();
+            dgvSach.ItemsSource = null;
             dgvSach.ItemsSource = dsSach.ToList();
         }
 
-        private void LamMoi()
+        private void window_Loaded(object sender, RoutedEventArgs e)
+        {
+            xuLySach = new XuLySach();
+            if (TruyCapDuLieu.docFile("SACH.txt"))
+                HienThiDSSach();
+            else
+                MessageBox.Show("Không thể đọc file SACH.txt");
+        }
+
+        private void btnThem_Click(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtMaSach.Text)) 
+            { 
+                MessageBox.Show("Vui lòng nhập mã khách hàng");
+                return;
+            }
+
+            Sach sachMoi = new Sach(txtMaSach.Text, txtTenSach.Text, txtMaTG.Text, txtMaNXB.Text, decimal.Parse(txtGiaBan.Text), int.Parse(txtSoLuong.Text));
+            bool ketQuaThem = xuLySach.Them(sachMoi);
+            if (ketQuaThem)
+            {
+                MessageBox.Show("Thêm sách thành công!");
+                TruyCapDuLieu.ghiFile("SACH.txt");
+                HienThiDSSach();
+            }
+            else MessageBox.Show("Mã sách đã tồn tại");
+        }
+
+        private void btnSua_Click(object sender, RoutedEventArgs e)
+        {
+            if (dgvSach.SelectedItem is Sach sachCu)
+            {
+                Sach sachMoi = new Sach(txtMaSach.Text, txtTenSach.Text, txtMaTG.Text, txtMaNXB.Text, decimal.Parse(txtGiaBan.Text), int.Parse(txtSoLuong.Text));
+                bool ketQuaSua = xuLySach.Sua(sachCu, sachMoi);
+                if (ketQuaSua)
+                {
+                    MessageBox.Show("Sửa sách thành công!");
+                    TruyCapDuLieu.ghiFile("SACH.txt");
+                    HienThiDSSach();
+                }
+                else MessageBox.Show("Sửa sách thất bại!");
+            }
+            else
+            {
+                MessageBox.Show("Vui lòng chọn sách cần sửa!");
+            }
+        }
+
+        private void btnXoa_Click(object sender, RoutedEventArgs e)
+        {
+            if (dgvSach.SelectedItem is Sach sach)
+            {
+                bool ketQuaXoa = xuLySach.Xoa(sach);
+                if (ketQuaXoa)
+                {
+                    MessageBox.Show("Xóa sách thành công!");
+                    TruyCapDuLieu.ghiFile("SACH.txt");
+                    HienThiDSSach();
+                }
+                else MessageBox.Show("Xóa sách thất bại!");
+            }
+            else MessageBox.Show("Vui lòng chọn sách cần xóa!");
+        }
+
+        private void btnLamMoi_Click(object sender, RoutedEventArgs e)
         {
             txtMaSach.Clear();
             txtTenSach.Clear();
@@ -43,103 +110,6 @@ namespace QuanLyCuaHangSach.Views
             txtGiaBan.Clear();
             txtSoLuong.Clear();
             txtMaSach.Focus();
-        }
-
-        private void btnThem_Click(object sender, RoutedEventArgs e)
-        {
-            string maSach = txtMaSach.Text.Trim();
-
-            if (string.IsNullOrEmpty(maSach))
-            {
-                MessageBox.Show("Mã sách không được để trống.", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-
-            if (dsSach.TimMaSach(maSach) != null)
-            {
-                MessageBox.Show("Mã sách đã tồn tại. Vui lòng nhập mã khác.", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-
-            try
-            {
-                Sach newSach = new Sach
-                {
-                    MaSach = maSach,
-                    TenSach = txtTenSach.Text,
-                    MaTG = txtMaTG.Text,
-                    MaNXB = txtMaNXB.Text,
-                    GiaBan = decimal.Parse(txtGiaBan.Text),
-                    SoLuong = int.Parse(txtSoLuong.Text)
-                };
-
-                dsSach.Them(newSach);
-                DataService.LuuSach(dsSach);
-                HienThiSach();
-                LamMoi();
-                MessageBox.Show("Thêm sách thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-            catch (FormatException)
-            {
-                MessageBox.Show("Vui lòng kiểm tra định dạng số (Giá bán, Tồn kho).", "Lỗi định dạng", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Đã xảy ra lỗi: {ex.Message}", "Lỗi hệ thống", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
-        private void btnSua_Click(object sender, RoutedEventArgs e)
-        {
-            string maSach = txtMaSach.Text.Trim();
-            Sach sachToUpdate = dsSach.TimMaSach(maSach);
-
-            if (sachToUpdate == null)
-            {
-                MessageBox.Show("Không tìm thấy sách để sửa.", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-
-            try
-            {
-                sachToUpdate.TenSach = txtTenSach.Text;
-                sachToUpdate.MaTG = txtMaTG.Text;
-                sachToUpdate.MaNXB = txtMaNXB.Text;
-                sachToUpdate.GiaBan = decimal.Parse(txtGiaBan.Text);
-                sachToUpdate.SoLuong = int.Parse(txtSoLuong.Text);
-
-                DataService.LuuSach(dsSach);
-                HienThiSach();
-                MessageBox.Show("Cập nhật sách thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-            catch (FormatException)
-            {
-                MessageBox.Show("Vui lòng kiểm tra định dạng số (Giá bán, Tồn kho).", "Lỗi định dạng", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
-        private void btnXoa_Click(object sender, RoutedEventArgs e)
-        {
-            string maSach = txtMaSach.Text.Trim();
-            if (MessageBox.Show($"Bạn có chắc chắn muốn xóa sách có mã {maSach}?", "Xác nhận", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-            {
-                if (dsSach.XoaTheoMaSach(maSach))
-                {
-                    DataService.LuuSach(dsSach);
-                    HienThiSach();
-                    LamMoi();
-                    MessageBox.Show("Xóa sách thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-                }
-                else
-                {
-                    MessageBox.Show("Không tìm thấy sách cần xóa.", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-            }
-        }
-
-        private void btnLamMoi_Click(object sender, RoutedEventArgs e)
-        {
-            LamMoi();
         }
 
         private void dgvNhanVien_SelectionChanged(object sender, SelectionChangedEventArgs e)
