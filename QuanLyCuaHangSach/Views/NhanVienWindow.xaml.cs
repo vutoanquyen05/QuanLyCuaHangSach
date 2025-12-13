@@ -29,9 +29,9 @@ namespace QuanLyCuaHangSach.Views
 
         private void window_Loaded(object sender, RoutedEventArgs e)
         {
-            TruyCapDuLieu.docFile("NHANVIEN.txt");
-            HienThiDSNhanVien();
             xuLyNhanVien = new XuLyNhanVien();
+            TruyCapDuLieu.khoiTao().DocNhanVien();
+            HienThiDSNhanVien();
         }
 
         private void HienThiDSNhanVien()
@@ -54,7 +54,7 @@ namespace QuanLyCuaHangSach.Views
             if (ketQuaThem)
             {
                 MessageBox.Show("Thêm nhân viên thành công!");
-                TruyCapDuLieu.ghiFile("NHANVIEN.txt");
+                TruyCapDuLieu.khoiTao().LuuNhanVien();
                 HienThiDSNhanVien();
             }
             else MessageBox.Show("Mã nhân viên đã tồn tại");
@@ -69,7 +69,7 @@ namespace QuanLyCuaHangSach.Views
                 if (ketQuaSua)
                 {
                     MessageBox.Show("Sửa nhân viên thành công!");
-                    TruyCapDuLieu.ghiFile("NHANVIEN.txt");
+                    TruyCapDuLieu.khoiTao().LuuNhanVien();
                     HienThiDSNhanVien();
                 }
                 else MessageBox.Show("Sửa nhân viên thất bại!");
@@ -85,7 +85,7 @@ namespace QuanLyCuaHangSach.Views
                 if (ketQuaXoa)
                 {
                     MessageBox.Show("Xóa nhân viên thành công!");
-                    TruyCapDuLieu.ghiFile("NHANVIEN.txt");
+                    TruyCapDuLieu.khoiTao().LuuNhanVien();
                     HienThiDSNhanVien();
                 }
                 else MessageBox.Show("Xóa nhân viên thất bại!");

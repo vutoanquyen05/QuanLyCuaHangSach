@@ -51,7 +51,7 @@ namespace QuanLyCuaHangSach.Models
             set { this.soLuong = value; }
         }
 
-        public decimal TinhThanhTien()
+        private decimal TinhThanhTien()
         {
             return this.soLuong * this.sach.GiaBan;
         }

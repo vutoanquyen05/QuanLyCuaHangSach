@@ -39,9 +39,9 @@ namespace QuanLyCuaHangSach.Views
 
         private void window_Loaded(object sender, RoutedEventArgs e)
         {
-            TruyCapDuLieu.docFile("SACH.txt");
-            HienThiDSSach();
             xuLySach = new XuLySach();
+            TruyCapDuLieu.khoiTao().DocSach();
+            HienThiDSSach();
 
         }
 
@@ -58,7 +58,7 @@ namespace QuanLyCuaHangSach.Views
             if (ketQuaThem)
             {
                 MessageBox.Show("Thêm sách thành công!");
-                TruyCapDuLieu.ghiFile("SACH.txt");
+                TruyCapDuLieu.khoiTao().LuuSach();
                 HienThiDSSach();
             }
             else MessageBox.Show("Mã sách đã tồn tại");
@@ -73,7 +73,7 @@ namespace QuanLyCuaHangSach.Views
                 if (ketQuaSua)
                 {
                     MessageBox.Show("Sửa sách thành công!");
-                    TruyCapDuLieu.ghiFile("SACH.txt");
+                    TruyCapDuLieu.khoiTao().LuuSach();
                     HienThiDSSach();
                 }
                 else MessageBox.Show("Sửa sách thất bại!");
@@ -92,7 +92,7 @@ namespace QuanLyCuaHangSach.Views
                 if (ketQuaXoa)
                 {
                     MessageBox.Show("Xóa sách thành công!");
-                    TruyCapDuLieu.ghiFile("SACH.txt");
+                    TruyCapDuLieu.khoiTao().LuuSach();
                     HienThiDSSach();
                 }
                 else MessageBox.Show("Xóa sách thất bại!");

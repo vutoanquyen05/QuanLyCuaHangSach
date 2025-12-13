@@ -28,9 +28,9 @@ namespace QuanLyCuaHangSach.Views
         }
         private void window_Loaded(object sender, RoutedEventArgs e)
         {
-            TruyCapDuLieu.docFile("KHACHHANG.txt");
-            HienThiDSKhachHang();
             xuLyKhachHang = new XuLyKhachHang();
+            TruyCapDuLieu.khoiTao().DocKhachHang();
+            HienThiDSKhachHang();
         }
         private void HienThiDSKhachHang()
         {
@@ -52,7 +52,7 @@ namespace QuanLyCuaHangSach.Views
             if (ketQuaThem)
             {
                 MessageBox.Show("Thêm khách hàng thành công!");
-                TruyCapDuLieu.ghiFile("KHACHHANG.txt");
+                TruyCapDuLieu.khoiTao().LuuKhachHang();
                 HienThiDSKhachHang();
             }
             else MessageBox.Show("Mã khách hàng đã tồn tại");
@@ -67,7 +67,7 @@ namespace QuanLyCuaHangSach.Views
                 if (ketQuaSua)
                 {
                     MessageBox.Show("Sửa khách hàng thành công!");
-                    TruyCapDuLieu.ghiFile("KHACHHANG.TXT");
+                    TruyCapDuLieu.khoiTao().LuuKhachHang();
                     HienThiDSKhachHang();
                 }
                 else MessageBox.Show("Sửa khách hàng thất bại!");
@@ -83,7 +83,7 @@ namespace QuanLyCuaHangSach.Views
                 if (ketQuaXoa)
                 {
                     MessageBox.Show("Xóa khách hàng thành công!");
-                    TruyCapDuLieu.ghiFile("KHACHHANG.TXT");
+                    TruyCapDuLieu.khoiTao().LuuKhachHang();
                     HienThiDSKhachHang();
                 }
                 else MessageBox.Show("Xóa khách hàng thất bại!");

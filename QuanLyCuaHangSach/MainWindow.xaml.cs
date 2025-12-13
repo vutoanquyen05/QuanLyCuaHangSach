@@ -29,15 +29,11 @@ namespace QuanLyCuaHangSach
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            if (TruyCapDuLieu.docFile("KHACHHANG.txt"))
-                HienThiDSKhachHang();
-            else
-                MessageBox.Show("Không thể đọc file KHACHHANG.txt");
+            TruyCapDuLieu.khoiTao().DocKhachHang();
+            HienThiDSKhachHang();
 
-            if (TruyCapDuLieu.docFile("SACH.txt"))
-                HienThiDSSach();
-            else
-                MessageBox.Show("Không thể đọc file SACH.txt");
+            TruyCapDuLieu.khoiTao().DocSach();
+            HienThiDSSach();
         }
         private void HienThiDSSach()
         {
