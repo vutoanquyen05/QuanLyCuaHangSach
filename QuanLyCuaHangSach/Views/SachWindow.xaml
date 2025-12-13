@@ -126,19 +126,19 @@
                         </Grid.ColumnDefinitions>
 
                         <!--Thông tin cần lọc-->
-                        <TextBox Grid.Column="0" materialDesign:HintAssist.Hint="Mã sách"
-                             Width="120" Height="40" Margin="5 0" MaxWidth="120" MaxHeight="40"
+                        <TextBox Grid.Column="0" x:Name="txtLocMaSach" materialDesign:HintAssist.Hint="Mã sách"
+                             Width="175" Height="40" Margin="5 0" MaxWidth="175" MaxHeight="40"
                              TextWrapping="Wrap"
                              IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignFilledTextBoxEnabledComboBox}"
                              Style="{StaticResource MaterialDesignFilledTextBox}"/>
-                        <TextBox Grid.Column="1" materialDesign:HintAssist.Hint="Tên sách"
+                        <TextBox Grid.Column="1" x:Name="txtLocTenSach" materialDesign:HintAssist.Hint="Tên sách"
                              Width="175" Height="40" Margin="5 0" MaxWidth="175" MaxHeight="40"
                              TextWrapping="Wrap"
                              IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignFilledTextBoxEnabledComboBox}"
                              Style="{StaticResource MaterialDesignFilledTextBox}"/>
 
                         <!--Nút-->
-                        <Button Grid.Column="2" x:Name="btnTimMaNV" Content="Lọc" 
+                        <Button Grid.Column="2" x:Name="btnLoc" Content="Lọc" 
                              Margin="10 0" Width="80" Height="35" HorizontalAlignment="Right"/>
                     </Grid>
 

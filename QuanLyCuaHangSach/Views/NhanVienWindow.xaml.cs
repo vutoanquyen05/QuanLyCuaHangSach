@@ -49,7 +49,7 @@ namespace QuanLyCuaHangSach.Views
                 return;
             }
 
-            NhanVien nhanVienMoi = new NhanVien(txtMaNV.Text, txtTenNV.Text, txtChucVu.Text, txtSDT.Text, txtMaQL.Text);
+            NhanVien nhanVienMoi = new NhanVien(txtMaNV.Text, txtTenNV.Text, cboChucVu.Text, txtSDT.Text, txtMaQL.Text);
             bool ketQuaThem = xuLyNhanVien.Them(nhanVienMoi);
             if (ketQuaThem)
             {
@@ -64,7 +64,7 @@ namespace QuanLyCuaHangSach.Views
         {
             if (dgvNhanVien.SelectedItem is NhanVien nhanVienCu)
             {
-                NhanVien nhanVienMoi = new NhanVien(txtMaNV.Text, txtTenNV.Text, txtChucVu.Text, txtSDT.Text, txtMaQL.Text);
+                NhanVien nhanVienMoi = new NhanVien(txtMaNV.Text, txtTenNV.Text, cboChucVu.Text, txtSDT.Text, txtMaQL.Text);
                 bool ketQuaSua = xuLyNhanVien.Sua(nhanVienCu, nhanVienMoi);
                 if (ketQuaSua)
                 {
@@ -97,7 +97,7 @@ namespace QuanLyCuaHangSach.Views
         {
             txtMaNV.Clear();
             txtTenNV.Clear();
-            txtChucVu.Clear();
+            cboChucVu.SelectedIndex = -1;
             txtSDT.Clear();
             txtMaQL.Clear();
             txtMaNV.Focus();
@@ -109,7 +109,7 @@ namespace QuanLyCuaHangSach.Views
             {
                 txtMaNV.Text = select.MaNV;
                 txtTenNV.Text = select.TenNV;
-                txtChucVu.Text = select.ChucVu;
+                cboChucVu.Text = select.ChucVu;
                 txtSDT.Text = select.SoDienThoai;
                 txtMaQL.Text = select.MaQL;
             }

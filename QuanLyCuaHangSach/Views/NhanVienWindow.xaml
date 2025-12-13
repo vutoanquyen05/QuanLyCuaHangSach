@@ -71,12 +71,14 @@
                              VerticalAlignment="Center"
                              HorizontalAlignment="Left"
                              IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignFilledTextBoxEnabledComboBox}"/>
-                        <TextBox materialDesign:HintAssist.Hint="Chức vụ" x:Name="txtChucVu"
-                             Margin="10 5" Width="250" Height="35" MaxWidth="250" 
-                             TextWrapping="Wrap"
+                        <ComboBox materialDesign:HintAssist.Hint="Chức vụ" x:Name="cboChucVu" 
+                             Margin="10 5" Width="250" Height="35"
                              VerticalAlignment="Center"
                              HorizontalAlignment="Left"
-                             IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignFilledTextBoxEnabledComboBox}"/>
+                             IsEnabled="{Binding Path=IsChecked, ElementName=FilledComboBoxEnabledCheckBox}">
+                            <ComboBoxItem Content="Nhân viên" />
+                            <ComboBoxItem Content="Quản lý" />
+                        </ComboBox>
                         <TextBox materialDesign:HintAssist.Hint="Số điện thoại" x:Name="txtSDT"
                              Margin="10 5" Width="250" Height="35" MaxWidth="250" 
                              TextWrapping="Wrap"
@@ -122,17 +124,18 @@
                         </Grid.ColumnDefinitions>
 
                         <!--Thông tin cần lọc-->
-                        <TextBox Grid.Column="0" materialDesign:HintAssist.Hint="Mã nhân viên"
-                             Width="120" Height="40" Margin="5 0" MaxWidth="120" MaxHeight="40"
-                             TextWrapping="Wrap"
-                             IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignFilledTextBoxEnabledComboBox}"
-                             Style="{StaticResource MaterialDesignFilledTextBox}"/>
-                        <TextBox Grid.Column="1" materialDesign:HintAssist.Hint="Họ và tên"
+                        <TextBox Grid.Column="0" x:Name="txtLocHoTen" materialDesign:HintAssist.Hint="Họ và tên"
                              Width="175" Height="40" Margin="5 0" MaxWidth="175" MaxHeight="40"
                              TextWrapping="Wrap"
                              IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignFilledTextBoxEnabledComboBox}"
                              Style="{StaticResource MaterialDesignFilledTextBox}"/>
-                        
+                        <ComboBox Grid.Column="1" x:Name="cboLocChucVu" materialDesign:HintAssist.Hint="Chức vụ"
+                             Width="175" Margin="5 0"
+                             IsEnabled="{Binding Path=IsChecked, ElementName=FilledComboBoxEnabledCheckBox}"
+                             Style="{StaticResource MaterialDesignFilledComboBox}">
+                            <ComboBoxItem Content="Nhân viên" />
+                            <ComboBoxItem Content="Quản lý" />
+                        </ComboBox>
                         <!--Nút-->
                         <Button Grid.Column="2" x:Name="btnTimMaNV" Content="Lọc" 
                                 Margin="10 0" Width="80" Height="35" HorizontalAlignment="Right"/>

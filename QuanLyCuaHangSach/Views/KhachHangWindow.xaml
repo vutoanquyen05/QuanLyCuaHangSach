@@ -112,19 +112,19 @@
                         </Grid.ColumnDefinitions>
                         
                         <!--Thông tin cần lọc-->
-                        <TextBox Grid.Column="0" materialDesign:HintAssist.Hint="Mã khách hàng"
-                             Width="120" Height="40" Margin="5 0" MaxWidth="120" MaxHeight="40"
-                             TextWrapping="Wrap"
-                             IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignFilledTextBoxEnabledComboBox}"
-                             Style="{StaticResource MaterialDesignFilledTextBox}"/>
-                        <TextBox Grid.Column="1" materialDesign:HintAssist.Hint="Họ và tên"
+                        <TextBox Grid.Column="0" x:Name="txtLocHoTen" materialDesign:HintAssist.Hint="Họ và tên"
                              Width="175" Height="40" Margin="5 0" MaxWidth="175" MaxHeight="40"
                              TextWrapping="Wrap"
                              IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignFilledTextBoxEnabledComboBox}"
                              Style="{StaticResource MaterialDesignFilledTextBox}"/>
-                        
+                        <TextBox Grid.Column="1" x:Name="txtLocSDT" materialDesign:HintAssist.Hint="Số điện thoại"
+                             Width="175" Height="40" Margin="5 0" MaxWidth="175" MaxHeight="40"
+                             TextWrapping="Wrap"
+                             IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignFilledTextBoxEnabledComboBox}"
+                             Style="{StaticResource MaterialDesignFilledTextBox}"/>
+
                         <!--Nút-->
-                        <Button Grid.Column="2" x:Name="btnTimMaNV" Content="Lọc" 
+                        <Button Grid.Column="2" x:Name="btnLoc" Content="Lọc" 
                                 Margin="10 0" Width="80" Height="35" HorizontalAlignment="Right"/>
                     </Grid>
                     
