@@ -70,12 +70,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="DataStructures\LinkedListSach.cs" />
     <Compile Include="Models\ChiTietHoaDon.cs" />
     <Compile Include="Models\HoaDon.cs" />
     <Compile Include="Models\KhachHang.cs" />
     <Compile Include="Models\NhanVien.cs" />
-    <Compile Include="Services\DataService.cs" />
+    <Compile Include="Services\TruyCapDuLieu.cs" />
+    <Compile Include="Services\XuLyHoaDon.cs" />
+    <Compile Include="Services\XuLyKhachHang.cs" />
+    <Compile Include="Services\XuLyNhanVien.cs" />
+    <Compile Include="Services\XuLySach.cs" />
     <Compile Include="Views\LapHoaDonWindow.xaml.cs">
       <DependentUpon>LapHoaDonWindow.xaml</DependentUpon>
     </Compile>

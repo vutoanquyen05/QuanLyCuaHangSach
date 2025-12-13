@@ -7,28 +7,57 @@ using System.Threading.Tasks;
 
 namespace QuanLyCuaHangSach.Models
 {
-    public class ChiTietHoaDon
+    [Serializable]
+    internal class ChiTietHoaDon
     {
-        public string MaSach { get; set; }
-        public int SoLuong { get; set; }
-        public float DonGia { get; set; }
-        public override string ToString()
+        private int soLuong;
+        private Sach sach;
+
+        public ChiTietHoaDon()
         {
-            return $"{MaSach}|{SoLuong}|{DonGia.ToString(CultureInfo.InvariantCulture)}";
+            this.soLuong = 0;
+            this.sach = null;
+        }
+        public ChiTietHoaDon(int soLuong, Sach sach)
+        {
+            this.soLuong = soLuong;
+            this.sach = sach;
         }
 
-        // Đọc từ chuỗi file ra đối tượng
-        public static ChiTietHoaDon FromString(string detailString)
+        public string MaSach
         {
-            string[] subParts = detailString.Split('|');
-            if (subParts.Length != 3) return null;
+            get { return this.sach.MaSach; }
+            set { this.sach.MaSach = value; }
+        }
+        public string TenSach
+        {
+            get { return this.sach.TenSach; }
+            set { this.sach.TenSach = value; }
+        }
+        public decimal GiaBan
+        {
+            get { return this.sach.GiaBan; }
+            set { this.sach.GiaBan = value; }
+        }
 
-            return new ChiTietHoaDon
-            {
-                MaSach = subParts[0],
-                SoLuong = int.Parse(subParts[1]),
-                DonGia = float.Parse(subParts[2], CultureInfo.InvariantCulture)
-            };
+        public Sach Sach
+        {
+            get { return this.sach; }
+            set { this.sach = value; }
+        }
+        public int SoLuong
+        {
+            get { return this.soLuong; }
+            set { this.soLuong = value; }
+        }
+
+        public decimal TinhThanhTien()
+        {
+            return this.soLuong * this.sach.GiaBan;
+        }
+        public decimal ThanhTien
+        {
+            get { return TinhThanhTien(); }
         }
     }
 }

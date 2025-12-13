@@ -7,38 +7,62 @@ using System.Threading.Tasks;
 
 namespace QuanLyCuaHangSach.Models
 {
-    public class Sach
+    [Serializable]
+    internal class Sach
     {
-        public string MaSach { get; set; }
-        public string TenSach { get; set; }
-        public string MaTG { get; set; }     // FK: Mã Tác giả
-        public string MaNXB { get; set; }    // FK: Mã NXB
-        public decimal GiaBan { get; set; }
-        public int SoLuong { get; set; }
-
-        // Phương thức chuyển đổi đối tượng thành chuỗi CSV để ghi file
-        public override string ToString()
+        private string maSach;
+        private string tenSach;
+        private string maTG;
+        private string maNXB;
+        private decimal giaBan;
+        private int soLuong;
+        public Sach()
         {
-            // Sử dụng InvariantCulture để đảm bảo dấu thập phân là '.' khi ghi file
-            return $"{MaSach},{TenSach},{MaTG},{MaNXB},{GiaBan.ToString(CultureInfo.InvariantCulture)},{SoLuong}";
+            this.maSach = null;
+            this.tenSach = null;
+            this.maTG = null;
+            this.maNXB = null;
+            this.giaBan = 0;
+            this.soLuong = 0;
         }
-
-        // Phương thức tạo đối tượng từ chuỗi CSV (cần cho Xử Lý)
-        public static Sach FromCsv(string csvLine)
+        public Sach(string maSach, string tenSach, string maTG, string maNXB, decimal giaBan, int soLuong)
         {
-            string[] parts = csvLine.Split(',');
-            if (parts.Length != 6) throw new FormatException("Định dạng CSV không hợp lệ cho Sách.");
-
-            return new Sach
-            {
-                MaSach = parts[0],
-                TenSach = parts[1],
-                MaTG = parts[2],
-                MaNXB = parts[3],
-                // Sử dụng InvariantCulture để đọc dấu thập phân '.'
-                GiaBan = decimal.Parse(parts[4], CultureInfo.InvariantCulture),
-                SoLuong = int.Parse(parts[5])
-            };
+            this.maSach = maSach;
+            this.tenSach = tenSach;
+            this.maTG = maTG;
+            this.maNXB = maNXB;
+            this.giaBan = giaBan;
+            this.soLuong = soLuong;
+        }
+        public string MaSach
+        {
+            get { return this.maSach; }
+            set { this.maSach = value; }
+        }
+        public string TenSach
+        {
+            get { return this.tenSach; }
+            set { this.tenSach = value; }
+        }
+        public string MaTG
+        {
+            get { return this.maTG; }
+            set { this.maTG = value; }
+        }
+        public string MaNXB
+        {
+            get { return this.maNXB; }
+            set { this.maNXB = value; }
+        }
+        public decimal GiaBan
+        {
+            get { return this.giaBan; }
+            set { this.giaBan = value; }
+        }
+        public int SoLuong
+        {
+            get { return this.soLuong; }
+            set { this.soLuong = value; }
         }
     }
 }

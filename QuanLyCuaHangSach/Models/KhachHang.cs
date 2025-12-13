@@ -6,29 +6,46 @@ using System.Threading.Tasks;
 
 namespace QuanLyCuaHangSach.Models
 {
-    public class KhachHang
+    [Serializable]
+    internal class KhachHang
     {
-        public string MaKH { get; set; }
-        public string TenKH { get; set; }
-        public string SDT { get; set; }
-        public string DiaChi { get; set; }
-        public override string ToString()
+        private string maKH;
+        private string tenKH;
+        private string soDienThoai;
+        private string diaChi;
+        public KhachHang()
         {
-            return $"{MaKH},{TenKH},{SDT},{DiaChi}";
+            this.maKH = null;
+            this.tenKH = null;
+            this.soDienThoai = null;
+            this.diaChi = null;
         }
-
-        public static KhachHang FromCsv(string csvLine)
+        public KhachHang(string maKH, string tenKH, string soDienThoai, string diaChi)
         {
-            string[] parts = csvLine.Split(',');
-            if (parts.Length != 4) return null;
-
-            return new KhachHang
-            {
-                MaKH = parts[0],
-                TenKH = parts[1],
-                SDT = parts[2],
-                DiaChi = parts[3]
-            };
+            this.maKH = maKH;
+            this.tenKH = tenKH;
+            this.soDienThoai = soDienThoai;
+            this.diaChi = diaChi;
+        }
+        public string MaKH
+        {
+            get { return this.maKH; }
+            set { this.maKH = value; }
+        }
+        public string TenKH
+        {
+            get { return this.tenKH; }
+            set { this.tenKH = value; }
+        }
+        public string SoDienThoai
+        {
+            get { return this.soDienThoai; }
+            set { this.soDienThoai = value; }
+        }
+        public string DiaChi
+        {
+            get { return this.diaChi; }
+            set { this.diaChi = value; }
         }
     }
 }

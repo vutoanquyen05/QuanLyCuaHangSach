@@ -6,32 +6,54 @@ using System.Threading.Tasks;
 
 namespace QuanLyCuaHangSach.Models
 {
-    public class NhanVien
+    [Serializable]
+    internal class NhanVien
     {
-        public string MaNV { get; set; }
-        public string TenNV { get; set; }
-        public string ChucVu { get; set; }
-        public string SDT { get; set; }
-        public string MaQL { get; set; }
-        public override string ToString()
+        private string maNV;
+        private string tenNV;
+        private string chucVu;
+        private string soDienThoai;
+        private string maQL;
+        public NhanVien()
         {
-            return $"{MaNV},{TenNV},{ChucVu},{SDT},{MaQL}";
+            this.maNV = null;
+            this.tenNV = null;
+            this.chucVu = null;
+            this.soDienThoai = null;
+            this.maQL = null;
         }
-
-        public static NhanVien FromCsv(string csvLine)
+        public NhanVien(string maNV, string tenNV, string chucVu, string soDienThoai, string maQL)
         {
-            string[] parts = csvLine.Split(',');
-            // Kiểm tra độ dài để tránh lỗi nếu file bị trống hoặc sai
-            if (parts.Length != 5) return null;
-
-            return new NhanVien
-            {
-                MaNV = parts[0],
-                TenNV = parts[1],
-                ChucVu = parts[2],
-                SDT = parts[3],
-                MaQL = parts[4]
-            };
+            this.maNV = maNV;
+            this.tenNV = tenNV;
+            this.chucVu = chucVu;
+            this.soDienThoai = soDienThoai;
+            this.maQL = maQL;
+        }
+        public string MaNV
+        {
+            get { return this.maNV; }
+            set { this.maNV = value; }
+        }
+        public string TenNV
+        {
+            get { return this.tenNV; }
+            set { this.tenNV = value; }
+        }
+        public string ChucVu
+        {
+            get { return this.chucVu; }
+            set { this.chucVu = value; }
+        }
+        public string SoDienThoai
+        {
+            get { return this.soDienThoai; }
+            set { this.soDienThoai = value; }
+        }
+        public string MaQL
+        {
+            get { return this.maQL; }
+            set { this.maQL = value; }
         }
     }
 }
