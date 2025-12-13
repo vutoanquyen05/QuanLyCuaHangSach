@@ -19,6 +19,7 @@
         WindowStyle="None"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
+        Loaded="window_Loaded"
         
         Name="mainWindow"
         Title="Thông tin"

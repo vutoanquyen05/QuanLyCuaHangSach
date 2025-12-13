@@ -76,7 +76,7 @@ namespace QuanLyCuaHangSach.Services
                 using (StreamWriter sw = new StreamWriter(FileSach, false, Encoding.UTF8))
                 {
                     foreach (var s in dsSach)
-                        sw.WriteLine($"{s.MaSach}|{s.TenTG}|{s.MaNXB}|{s.TenSach}|{s.GiaBan}|{s.SoLuong}");
+                        sw.WriteLine($"{s.MaSach}|{s.TenSach}|{s.TenTG}|{s.MaNXB}|{s.GiaBan}|{s.SoLuong}");
                 }
             }
             catch (Exception ex) { MessageBox.Show("Lỗi lưu Sách: " + ex.Message); }

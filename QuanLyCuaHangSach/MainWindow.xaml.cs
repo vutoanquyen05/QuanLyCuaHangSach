@@ -27,7 +27,7 @@ namespace QuanLyCuaHangSach
         {
             InitializeComponent();
         }
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        private void window_Loaded(object sender, RoutedEventArgs e)
         {
             TruyCapDuLieu.khoiTao().DocKhachHang();
             HienThiDSKhachHang();
@@ -46,11 +46,6 @@ namespace QuanLyCuaHangSach
             List<KhachHang> dsKhachHang = TruyCapDuLieu.khoiTao().getDSKhachHang();
             dgvKhachHang.ItemsSource = null;
             dgvKhachHang.ItemsSource = dsKhachHang.ToList();
-        }
-
-        private void btnKho_Click(object sender, RoutedEventArgs e)
-        {
-
         }
 
         private void btnSach_Click(object sender, RoutedEventArgs e)

@@ -19,10 +19,8 @@ using MessageBox = System.Windows.MessageBox;
 namespace QuanLyCuaHangSach.Views
 {
     /// <summary>
-    /// Interaction logic for HoaDonWindow.xaml
+    /// Interaction logic for LapHoaDonWindow.xaml
     /// </summary>
-    
-    // Class phụ để hiển thị lên DataGrid (bao gồm Thành Tiền)
     public class GioHang
     {
         public string MaSach { get; set; }
@@ -32,11 +30,11 @@ namespace QuanLyCuaHangSach.Views
     }
     public partial class LapHoaDonWindow : Window
     {
-        private List<Sach> Sach;     // Danh sách sách trong kho (Linked List)
-        private List<KhachHang> dsKhachHang; // Danh sách khách hàng
-        private List<NhanVien> dsNhanVien;  // Danh sách nhân viên
+        private List<Sach> Sach;
+        private List<KhachHang> dsKhachHang;
+        private List<NhanVien> dsNhanVien;
 
-        private List<GioHang> gioHang = new List<GioHang>();// Giỏ hàng tạm thời
+        private List<GioHang> gioHang = new List<GioHang>();
         public LapHoaDonWindow()
         {
             InitializeComponent();
@@ -62,21 +60,17 @@ namespace QuanLyCuaHangSach.Views
 
         }
 
-        private void dgvLapHoaDon_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void dgvSach_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (dgvLapHoaDon.SelectedItem is ChiTietHoaDon select)
-            {
-                txtMaSach.Text = select.MaSach;
-                txtSoLuong.Text = select.SoLuong.ToString();
-            }
+
+        }
+
+        private void dgvGioHang_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
 
         private void btnThanhToan_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void btnLamMoi_Click(object sender, RoutedEventArgs e)
         {
 
         }
