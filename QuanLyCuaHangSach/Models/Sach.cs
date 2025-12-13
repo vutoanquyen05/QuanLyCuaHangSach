@@ -12,7 +12,7 @@ namespace QuanLyCuaHangSach.Models
     {
         private string maSach;
         private string tenSach;
-        private string maTG;
+        private string tenTG;
         private string maNXB;
         private decimal giaBan;
         private int soLuong;
@@ -20,7 +20,7 @@ namespace QuanLyCuaHangSach.Models
         {
             this.maSach = null;
             this.tenSach = null;
-            this.maTG = null;
+            this.tenTG = null;
             this.maNXB = null;
             this.giaBan = 0;
             this.soLuong = 0;
@@ -29,7 +29,7 @@ namespace QuanLyCuaHangSach.Models
         {
             this.maSach = maSach;
             this.tenSach = tenSach;
-            this.maTG = maTG;
+            this.tenTG = maTG;
             this.maNXB = maNXB;
             this.giaBan = giaBan;
             this.soLuong = soLuong;
@@ -44,10 +44,10 @@ namespace QuanLyCuaHangSach.Models
             get { return this.tenSach; }
             set { this.tenSach = value; }
         }
-        public string MaTG
+        public string TenTG
         {
-            get { return this.maTG; }
-            set { this.maTG = value; }
+            get { return this.tenTG; }
+            set { this.tenTG = value; }
         }
         public string MaNXB
         {

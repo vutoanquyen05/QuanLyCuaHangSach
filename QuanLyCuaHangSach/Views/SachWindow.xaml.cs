@@ -53,7 +53,7 @@ namespace QuanLyCuaHangSach.Views
                 return;
             }
 
-            Sach sachMoi = new Sach(txtMaSach.Text, txtTenSach.Text, txtMaTG.Text, txtMaNXB.Text, decimal.Parse(txtGiaBan.Text), int.Parse(txtSoLuong.Text));
+            Sach sachMoi = new Sach(txtMaSach.Text, txtTenSach.Text, txtTenTG.Text, txtMaNXB.Text, decimal.Parse(txtGiaBan.Text), int.Parse(txtSoLuong.Text));
             bool ketQuaThem = xuLySach.Them(sachMoi);
             if (ketQuaThem)
             {
@@ -68,7 +68,7 @@ namespace QuanLyCuaHangSach.Views
         {
             if (dgvSach.SelectedItem is Sach sachCu)
             {
-                Sach sachMoi = new Sach(txtMaSach.Text, txtTenSach.Text, txtMaTG.Text, txtMaNXB.Text, decimal.Parse(txtGiaBan.Text), int.Parse(txtSoLuong.Text));
+                Sach sachMoi = new Sach(txtMaSach.Text, txtTenSach.Text, txtTenTG.Text, txtMaNXB.Text, decimal.Parse(txtGiaBan.Text), int.Parse(txtSoLuong.Text));
                 bool ketQuaSua = xuLySach.Sua(sachCu, sachMoi);
                 if (ketQuaSua)
                 {
@@ -104,7 +104,7 @@ namespace QuanLyCuaHangSach.Views
         {
             txtMaSach.Clear();
             txtTenSach.Clear();
-            txtMaTG.Clear();
+            txtTenTG.Clear();
             txtMaNXB.Clear();
             txtGiaBan.Clear();
             txtSoLuong.Clear();
@@ -117,7 +117,7 @@ namespace QuanLyCuaHangSach.Views
             {
                 txtMaSach.Text = select.MaSach;
                 txtTenSach.Text = select.TenSach;
-                txtMaTG.Text = select.MaTG;
+                txtTenTG.Text = select.TenTG;
                 txtMaNXB.Text = select.MaNXB;
                 txtGiaBan.Text = select.GiaBan.ToString();
                 txtSoLuong.Text = select.SoLuong.ToString();

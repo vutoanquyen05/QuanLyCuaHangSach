@@ -14,11 +14,12 @@ namespace QuanLyCuaHangSach.Services
     internal class TruyCapDuLieu
     {
         // --- ĐỊNH NGHĨA TÊN FILE CỐ ĐỊNH ---
-        private const string FileSach = "SACH.txt";
-        private const string FileKH = "KHACHHANG.txt";
-        private const string FileNV = "NHANVIEN.txt";
-        private const string FileHD = "HOADON.txt";
-        private const string FileCTHD = "CHITIETHOADON.txt";
+        private const string FileSach = "Data/SACH.txt";
+        private const string FileKH = "Data/KHACHHANG.txt";
+        private const string FileNV = "Data/NHANVIEN.txt";
+        private const string FileHD = "Data/HOADON.txt";
+        private const string FileCTHD = "Data/CHITIETHOADON.txt";
+
 
         // --- CÁC DANH SÁCH DỮ LIỆU ---
         private static TruyCapDuLieu instance = null;
@@ -36,6 +37,13 @@ namespace QuanLyCuaHangSach.Services
             dsHoaDon = new List<HoaDon>();
             dsChiTietHoaDon = new List<ChiTietHoaDon>();
         }
+        public static TruyCapDuLieu khoiTao()
+        {
+            if (instance == null)
+                instance = new TruyCapDuLieu();
+            return instance;
+        }
+
 
         //--- CÁC PHƯƠNG THỨC LẤY DỮ LIỆU ---
         public List<Sach> getDSSach()
@@ -59,14 +67,8 @@ namespace QuanLyCuaHangSach.Services
             return dsChiTietHoaDon;
         }
 
-        
-        public static TruyCapDuLieu khoiTao()
-        {
-            if (instance == null)
-                instance = new TruyCapDuLieu();
-            return instance;
-        }
 
+        //--- CÁC PHƯƠNG THỨC LƯU FILE ---
         public void LuuSach()
         {
             try
@@ -74,12 +76,11 @@ namespace QuanLyCuaHangSach.Services
                 using (StreamWriter sw = new StreamWriter(FileSach, false, Encoding.UTF8))
                 {
                     foreach (var s in dsSach)
-                        sw.WriteLine($"{s.MaSach}|{s.TenSach}|{s.GiaBan}|{s.SoLuong}");
+                        sw.WriteLine($"{s.MaSach}|{s.TenTG}|{s.MaNXB}|{s.TenSach}|{s.GiaBan}|{s.SoLuong}");
                 }
             }
             catch (Exception ex) { MessageBox.Show("Lỗi lưu Sách: " + ex.Message); }
         }
-
         public void LuuKhachHang()
         {
             try
@@ -92,7 +93,6 @@ namespace QuanLyCuaHangSach.Services
             }
             catch (Exception ex) { MessageBox.Show("Lỗi lưu Khách Hàng: " + ex.Message); }
         }
-
         public void LuuNhanVien()
         {
             try
@@ -100,12 +100,11 @@ namespace QuanLyCuaHangSach.Services
                 using (StreamWriter sw = new StreamWriter(FileNV, false, Encoding.UTF8))
                 {
                     foreach (var nv in dsNhanVien)
-                        sw.WriteLine($"{nv.MaNV}|{nv.TenNV}|{nv.ChucVu}|{nv.SoDienThoai}");
+                        sw.WriteLine($"{nv.MaNV}|{nv.TenNV}|{nv.ChucVu}|{nv.SoDienThoai}|{nv.MaQL}");
                 }
             }
             catch (Exception ex) { MessageBox.Show("Lỗi lưu Nhân Viên: " + ex.Message); }
         }
-
         public void LuuHoaDon()
         {
             try
@@ -118,7 +117,6 @@ namespace QuanLyCuaHangSach.Services
             }
             catch (Exception ex) { MessageBox.Show("Lỗi lưu Hóa Đơn: " + ex.Message); }
         }
-
         public void LuuChiTietHoaDon()
         {
             try
@@ -132,6 +130,7 @@ namespace QuanLyCuaHangSach.Services
             catch (Exception ex) { MessageBox.Show("Lỗi lưu Chi Tiết Hoá Đơn: " + ex.Message); }
         }
 
+
         //--- CÁC PHƯƠNG THỨC ĐỌC FILE ---
         public void DocSach()
         {
@@ -143,13 +142,12 @@ namespace QuanLyCuaHangSach.Services
                 {
                     if (string.IsNullOrWhiteSpace(line)) continue;
                     string[] p = line.Split('|');
-                    if (p.Length >= 4)
-                        dsSach.Add(new Sach { MaSach = p[0], TenSach = p[1], GiaBan = decimal.Parse(p[2]), SoLuong = int.Parse(p[3]) });
+                    if (p.Length >= 6)
+                        dsSach.Add(new Sach { MaSach = p[0], TenSach = p[1], TenTG = p[2], MaNXB = p[3], GiaBan = decimal.Parse(p[4]), SoLuong = int.Parse(p[5]) });
                 }
             }
             catch { }
         }
-
         public void DocKhachHang()
         {
             if (!File.Exists(FileKH)) return;
@@ -166,7 +164,6 @@ namespace QuanLyCuaHangSach.Services
             }
             catch { }
         }
-
         public void DocNhanVien()
         {
             if (!File.Exists(FileNV)) return;
@@ -177,13 +174,12 @@ namespace QuanLyCuaHangSach.Services
                 {
                     if (string.IsNullOrWhiteSpace(line)) continue;
                     string[] p = line.Split('|');
-                    if (p.Length >= 4)
-                        dsNhanVien.Add(new NhanVien { MaNV = p[0], TenNV = p[1], ChucVu = p[2], SoDienThoai = p[3] });
+                    if (p.Length >= 5)
+                        dsNhanVien.Add(new NhanVien { MaNV = p[0], TenNV = p[1], ChucVu = p[2], SoDienThoai = p[3], MaQL = p[4] });
                 }
             }
             catch { }
         }
-
         public void DocHoaDon()
         {
             if (!File.Exists(FileHD)) return;
@@ -200,7 +196,6 @@ namespace QuanLyCuaHangSach.Services
             }
             catch { }
         }
-
         public void DocChiTietHoaDon()
         {
             if (!File.Exists(FileCTHD)) return;

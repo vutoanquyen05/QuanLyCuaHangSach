@@ -73,7 +73,7 @@
                              VerticalAlignment="Center" HorizontalAlignment="Left"
                              TextWrapping="Wrap"
                              IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignFilledTextBoxEnabledComboBox}"/>
-                        <TextBox x:Name="txtMaTG" materialDesign:HintAssist.Hint="Mã Tác giả"
+                        <TextBox x:Name="txtTenTG" materialDesign:HintAssist.Hint="Tên tác giả"
                              Margin="10 5" Width="250" Height="35" MaxWidth="250"
                              VerticalAlignment="Center" HorizontalAlignment="Left"
                              TextWrapping="Wrap"
