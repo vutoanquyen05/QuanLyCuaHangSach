@@ -149,22 +149,35 @@
                             <RowDefinition Height="auto"></RowDefinition>
                             <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
+                        
+                        <!--Title và lọc-->
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <!--Title-->
+                            <TextBlock Grid.Column="0" Text="KHÁCH HÀNG"
+                                       FontSize="22" FontWeight="Normal"
+                                       VerticalAlignment="Bottom" Margin="5 0"/>
 
-                        <!--Lọc-->
-                        <StackPanel Grid.Row="0" Margin="5 0" Orientation="Horizontal" HorizontalAlignment="Right">
-                            
-                            <!--Thông tin cần lọc-->
-                            <TextBox materialDesign:HintAssist.Hint="Số điện thoại"
-                                 Width="120" Height="40" Margin="5 0" MaxWidth="120" MaxHeight="40"
-                                 TextWrapping="Wrap"
-                                 IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignFilledTextBoxEnabledComboBox}"
-                                 Style="{StaticResource MaterialDesignFilledTextBox}"/>
-                            
-                            <!--Nút-->
-                            <Button  Content="Lọc"
-                                     Margin="5" Width="100"
-                                     Style="{StaticResource MaterialDesignRaisedButton}"/>
-                        </StackPanel>
+                            <!--Lọc-->
+                            <StackPanel Grid.Column="1" 
+                                        Margin="5 0" Orientation="Horizontal" HorizontalAlignment="Right">
+
+                                <!--Thông tin cần lọc-->
+                                <TextBox x:Name="txtSoDienThoai" materialDesign:HintAssist.Hint="Số điện thoại"
+                                         Width="120" Height="40" Margin="5 0" MaxWidth="120" MaxHeight="40"
+                                         TextWrapping="Wrap"
+                                         IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignFilledTextBoxEnabledComboBox}"
+                                         Style="{StaticResource MaterialDesignFilledTextBox}"/>
+
+                                <!--Nút-->
+                                <Button  x:Name="btnLocKhachHang" Content="Lọc" Click="btnLocKhachHang_Click"
+                                         Margin="5" Width="100"
+                                         Style="{StaticResource MaterialDesignRaisedButton}"/>
+                            </StackPanel>
+                        </Grid>
 
                         <!--Vạch kẻ-->
                         <Grid Grid.Row="1">
@@ -188,21 +201,34 @@
                             <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
 
-                        <!--Lọc-->
-                        <StackPanel Grid.Row="0" Margin="5 0" Orientation="Horizontal" HorizontalAlignment="Right">
+                        <!--Title và lọc-->
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <!--Title-->
+                            <TextBlock Grid.Column="0" Text="SÁCH"
+                                       FontSize="22" FontWeight="Normal"
+                                       VerticalAlignment="Bottom" Margin="5 0"/>
 
-                            <!--Thông tin cần lọc-->
-                            <TextBox materialDesign:HintAssist.Hint="Mã sách" 
-                                 Width="120" Height="40" Margin="5 0" MaxWidth="120" MaxHeight="40"
-                                 TextWrapping="Wrap"
-                                 IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignFilledTextBoxEnabledComboBox}"
-                                 Style="{StaticResource MaterialDesignFilledTextBox}"/>
-                            
-                            <!--Nút-->
-                            <Button Content="Lọc"
-                                    Margin="5" Width="100"
-                                    Style="{StaticResource MaterialDesignRaisedButton}"></Button>
-                        </StackPanel>
+                            <!--Lọc-->
+                            <StackPanel Grid.Column="1" 
+                                        Margin="5 0" Orientation="Horizontal" HorizontalAlignment="Right">
+
+                                <!--Thông tin cần lọc-->
+                                <TextBox x:Name="txtTenSach" materialDesign:HintAssist.Hint="Tên sách"
+                                         Width="120" Height="40" Margin="5 0" MaxWidth="120" MaxHeight="40"
+                                         TextWrapping="Wrap"
+                                         IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignFilledTextBoxEnabledComboBox}"
+                                         Style="{StaticResource MaterialDesignFilledTextBox}"/>
+
+                                <!--Nút-->
+                                <Button  x:Name="btnLocSach" Content="Lọc" Click="btnLocSach_Click"
+                                         Margin="5" Width="100"
+                                         Style="{StaticResource MaterialDesignRaisedButton}"/>
+                            </StackPanel>
+                        </Grid>
 
                         <!--Vạch kẻ-->
                         <Grid Grid.Row="1">

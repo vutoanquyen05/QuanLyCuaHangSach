@@ -77,5 +77,15 @@ namespace QuanLyCuaHangSach
             dsSach = DataService.XuLySach();
             dgvSach.ItemsSource = dsSach.ToList();
         }
+
+        private void btnLocSach_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnLocKhachHang_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
