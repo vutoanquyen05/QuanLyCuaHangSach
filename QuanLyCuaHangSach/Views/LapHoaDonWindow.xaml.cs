@@ -21,58 +21,134 @@ namespace QuanLyCuaHangSach.Views
     /// <summary>
     /// Interaction logic for LapHoaDonWindow.xaml
     /// </summary>
-    public class GioHang
-    {
-        public string MaSach { get; set; }
-        public int SoLuong { get; set; }
-        public float DonGia { get; set; }
-        public float ThanhTien => SoLuong * DonGia;
-    }
+
     public partial class LapHoaDonWindow : Window
     {
-        private List<Sach> Sach;
-        private List<KhachHang> dsKhachHang;
-        private List<NhanVien> dsNhanVien;
-
+        private XuLyHoaDon xuLyHoaDon;
+        private class GioHang
+        {
+            public string MaSach { get; set; }
+            public int SoLuong { get; set; }
+            public decimal DonGia { get; set; }
+            public decimal ThanhTien { get { return SoLuong * DonGia; } }
+        }
         private List<GioHang> gioHang = new List<GioHang>();
+
         public LapHoaDonWindow()
         {
             InitializeComponent();
         }
 
-        private void HienThiDanhSach(DataGridView dgv, List<ChiTietHoaDon> ds)
+        private void window_Loaded(object sender, RoutedEventArgs e)
         {
+            xuLyHoaDon = new XuLyHoaDon();
+            TruyCapDuLieu.khoiTao().DocSach();
+            HienThiDSSach();
+            HienThiGioHang();
+        }
+        private void HienThiDSSach()
+        {
+            List<Sach> dsSach = TruyCapDuLieu.khoiTao().getDSSach();
+            dgvSach.ItemsSource = null;
+            dgvSach.ItemsSource = dsSach.ToList();
+        }
+        
+        private void HienThiGioHang()
+        {
+            dgvGioHang.ItemsSource = null;
+            dgvGioHang.ItemsSource = gioHang.ToList();
 
+            decimal tongTien = 0;
+            foreach (GioHang sach in gioHang)
+                tongTien += sach.ThanhTien;
+            txtTongTien.Text = tongTien.ToString("N0");
         }
 
         private void btnThem_Click(object sender, RoutedEventArgs e)
         {
-
-        }
-
-        private void btnSua_Click(object sender, RoutedEventArgs e)
-        {
-
+            if (string.IsNullOrWhiteSpace(txtMaSach.Text))
+            {
+                MessageBox.Show("Vui lòng nhập hoặc chọn sách");
+                return;
+            }
+            if (dgvSach.SelectedItem is Sach sach)
+            {
+                GioHang item = new GioHang()
+                {
+                    MaSach = sach.MaSach,
+                    SoLuong = int.Parse(txtSoLuong.Text),
+                    DonGia = sach.GiaBan
+                };
+                this.gioHang.Add(item);
+                HienThiGioHang();
+            }
         }
 
         private void btnXoa_Click(object sender, RoutedEventArgs e)
         {
-
-        }
-
-        private void dgvSach_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void dgvGioHang_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
+            if (dgvGioHang.SelectedItem is GioHang item)
+            {
+                gioHang.Remove(item);
+                HienThiGioHang();
+            }
         }
 
         private void btnThanhToan_Click(object sender, RoutedEventArgs e)
         {
+            if (gioHang.Count == 0)
+            {
+                MessageBox.Show("Giỏ hàng trống");
+                return;
+            }
 
+            if (string.IsNullOrWhiteSpace(txtMaHD.Text) ||
+                string.IsNullOrWhiteSpace(txtMaKH.Text) ||
+                string.IsNullOrWhiteSpace(txtMaNV.Text) ||
+                string.IsNullOrWhiteSpace(txtSDT.Text))
+            {
+                MessageBox.Show("Vui lòng nhập đầy đủ thông tin hóa đơn");
+                return;
+            }
+            //Tạo hóa đơn
+            HoaDon hoaDon = new HoaDon()
+            {
+                MaHD = txtMaHD.Text,
+                MaKH = txtMaKH.Text,
+                MaNV = txtMaNV.Text,    
+                SoDienThoai = txtSDT.Text,
+                NgayLap = DateTime.Now,
+                ChiTietHoaDon = new List<ChiTietHoaDon>()
+            };
+
+            //Thêm chi tiết từ giỏ hàng
+            foreach (GioHang sach in gioHang)
+            {
+                ChiTietHoaDon chiTiet = new ChiTietHoaDon()
+                {
+                    MaHD = hoaDon.MaHD,
+                    MaSach = sach.MaSach,
+                    SoLuong = sach.SoLuong,
+                    GiaBan = sach.DonGia
+                };
+                hoaDon.ChiTietHoaDon.Add(chiTiet);
+            }
+
+            //Lưu hóa đơn
+            bool ketQuaThem = xuLyHoaDon.Them(hoaDon);
+            if (ketQuaThem)
+            {
+                TruyCapDuLieu.khoiTao().LuuHoaDon();
+                TruyCapDuLieu.khoiTao().LuuChiTietHoaDon();
+                MessageBox.Show("Thanh toán hóa đơn thành công!");
+                this.Close();
+            }
+            else
+                MessageBox.Show("Mã hóa đơn đã tồn tại hoặc sách trong giỏ hàng không đủ số lượng!");
+        }
+        private void dgvSach_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (dgvSach.SelectedItem is Sach sach)
+                txtMaSach.Text = sach.MaSach;
         }
     }
 }

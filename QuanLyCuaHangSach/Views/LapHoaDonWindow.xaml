@@ -20,6 +20,7 @@
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
         x:Name="window"
+        Loaded="window_Loaded"
         
         Title="Lập hoá đơn"
         Width="850" Height="500">
@@ -42,7 +43,7 @@
         <!--Window-->
         <Grid Grid.ColumnSpan="2" Margin="0,24,0,0" Grid.RowSpan="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="350"></ColumnDefinition>
+                <ColumnDefinition Width="400"></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
@@ -77,10 +78,11 @@
                              VerticalAlignment="Center" HorizontalAlignment="Left"
                              TextWrapping="Wrap"
                              IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignFilledTextBoxEnabledComboBox}"/>
-                        <DatePicker x:Name="dpNgayLap" materialDesign:HintAssist.Hint="Ngày lập"
+                        <TextBox x:Name="txtSDT" materialDesign:HintAssist.Hint="Số điện thoại"
                              Margin="10 5" Width="250" Height="35" MaxWidth="250"
                              VerticalAlignment="Center" HorizontalAlignment="Left"
-                             IsEnabled="False"/>
+                             TextWrapping="Wrap"
+                             IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignFilledTextBoxEnabledComboBox}"/>
                     </StackPanel>
 
                     <!--Thông tin giỏ-->
@@ -91,24 +93,28 @@
                         </Grid.RowDefinitions>
 
                         <!--Sách-->
-                        <Grid Grid.Row="0">
+                        <Grid Grid.Row="0" Margin="5 0">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition Width="auto"></ColumnDefinition>
+                                <ColumnDefinition Width="auto"></ColumnDefinition>
                                 <ColumnDefinition></ColumnDefinition>
                             </Grid.ColumnDefinitions>
 
-                            <TextBox Grid.Column="0" x:Name="txtSoLuong" materialDesign:HintAssist.Hint="Số lượng"
-                                     Margin="10 5" Width="100" Height="35" MaxWidth="100"
+                            <TextBox Grid.Column="0" x:Name="txtMaSach" materialDesign:HintAssist.Hint="Mã sách"
+                                     Margin="5 0 0 0" Width="150" Height="35" MaxWidth="150"
+                                     VerticalAlignment="Center" HorizontalAlignment="Left"
+                                     TextWrapping="Wrap"
+                                     IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignFilledTextBoxEnabledComboBox}"/>
+                            <TextBox Grid.Column="1" x:Name="txtSoLuong" materialDesign:HintAssist.Hint="Số lượng"
+                                     Width="100" Height="35" MaxWidth="100"
                                      VerticalAlignment="Center" HorizontalAlignment="Left"
                                      TextWrapping="Wrap"
                                      IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignFilledTextBoxEnabledComboBox}"/>
 
                             <!--Nút chức năng-->
-                            <StackPanel Grid.Column="1"
+                            <StackPanel Grid.Column="2"
                                         Margin="0 5" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
                                 <Button x:Name="btnThem" Content="Thêm" Click="btnThem_Click"
-                                Width="70" Margin="5"/>
-                                <Button x:Name="btnXoa" Content="Xóa" Click="btnXoa_Click"
                                 Width="70" Margin="5"/>
                             </StackPanel>
                         </Grid>
@@ -130,7 +136,7 @@
 
                     <!--Bảng dữ liệu-->
                     <DataGrid Grid.Row="0" x:Name="dgvGioHang"
-                              Margin="5" AutoGenerateColumns="True" IsReadOnly="True" SelectionChanged="dgvGioHang_SelectionChanged">
+                              Margin="5" AutoGenerateColumns="True" IsReadOnly="True">
                     </DataGrid>
                     
                     <!--Thanh toán-->
@@ -140,6 +146,7 @@
                             <ColumnDefinition Width="auto"></ColumnDefinition>
                             <ColumnDefinition Width="auto"></ColumnDefinition>
                             <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition Width="auto"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         
                         <!--Giá-->
@@ -154,10 +161,12 @@
                                    VerticalAlignment="Center"/>
 
                         <!--Nút-->
-                        <Button Grid.Column="3" x:Name="btnThanhToan" Content="Thanh toán" Click="btnThanhToan_Click"
+                        <Button Grid.Column="3" x:Name="btnXoa" Content="Xóa" Click="btnXoa_Click"
+                                FontWeight="Bold" FontSize="16"
+                                Margin="5 0" Width="120" Height="40"  HorizontalAlignment="Right"/>
+                        <Button Grid.Column="4" x:Name="btnThanhToan" Content="Thanh toán" Click="btnThanhToan_Click"
                                 FontWeight="Bold" FontSize="16"
                                 Width="120" Height="40" HorizontalAlignment="Right"/>
-
                     </Grid>
                 </Grid>
             </materialDesign:Card>

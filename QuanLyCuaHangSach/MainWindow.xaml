@@ -172,15 +172,15 @@
 
                                 <!--Thông tin cần lọc-->
                                 <TextBox Grid.Column="0" x:Name="txtLocHoTen" materialDesign:HintAssist.Hint="Họ và tên"
-                             Width="150" Height="40" Margin="5 0" MaxWidth="150" MaxHeight="40"
-                             TextWrapping="Wrap"
-                             IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignFilledTextBoxEnabledComboBox}"
-                             Style="{StaticResource MaterialDesignFilledTextBox}"/>
+                                         Width="150" Height="40" Margin="5 0" MaxWidth="150" MaxHeight="40"
+                                         TextWrapping="Wrap"
+                                         IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignFilledTextBoxEnabledComboBox}"
+                                         Style="{StaticResource MaterialDesignFilledTextBox}"/>
                                 <TextBox Grid.Column="1" x:Name="txtLocSDT" materialDesign:HintAssist.Hint="Số điện thoại"
-                             Width="150" Height="40" Margin="5 0" MaxWidth="150" MaxHeight="40"
-                             TextWrapping="Wrap"
-                             IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignFilledTextBoxEnabledComboBox}"
-                             Style="{StaticResource MaterialDesignFilledTextBox}"/>
+                                         Width="150" Height="40" Margin="5 0" MaxWidth="150" MaxHeight="40"
+                                         TextWrapping="Wrap"
+                                         IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignFilledTextBoxEnabledComboBox}"
+                                         Style="{StaticResource MaterialDesignFilledTextBox}"/>
 
                                 <!--Nút-->
                                 <Button Grid.Column="2" x:Name="btnLocKhachHang" Content="Lọc" 
@@ -213,7 +213,7 @@
                         <!--Title và lọc-->
                         <Grid Grid.Row="0">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition Width="auto"></ColumnDefinition>
                                 <ColumnDefinition></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <!--Title-->
@@ -224,18 +224,24 @@
                             <!--Lọc-->
                             <Grid Grid.Column="1" HorizontalAlignment="Right">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                                    <ColumnDefinition Width="auto"></ColumnDefinition>
                                     <ColumnDefinition></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
                                 <!--Thông tin cần lọc-->
-                                <TextBox Grid.Column="0" x:Name="txtTenSach" materialDesign:HintAssist.Hint="Tên sách"
+                                <TextBox Grid.Column="0" x:Name="txtMaSach" materialDesign:HintAssist.Hint="Mã sách"
+                                         Width="150" Height="40" Margin="5 0" MaxWidth="150" MaxHeight="40"
+                                         TextWrapping="Wrap"
+                                         IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignFilledTextBoxEnabledComboBox}"
+                                         Style="{StaticResource MaterialDesignFilledTextBox}"/>
+                                <TextBox Grid.Column="1" x:Name="txtTenSach" materialDesign:HintAssist.Hint="Tên sách"
                                          Width="150" Height="40" Margin="5 0" MaxWidth="150" MaxHeight="40"
                                          TextWrapping="Wrap"
                                          IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignFilledTextBoxEnabledComboBox}"
                                          Style="{StaticResource MaterialDesignFilledTextBox}"/>
 
                                 <!--Nút-->
-                                <Button  Grid.Column="1" x:Name="btnLocSach" Content="Lọc" Click="btnLocSach_Click"
+                                <Button  Grid.Column="2" x:Name="btnLocSach" Content="Lọc" Click="btnLocSach_Click"
                                          Margin="10 0" Width="80" Height="35"/>
                             </Grid>
                         </Grid>

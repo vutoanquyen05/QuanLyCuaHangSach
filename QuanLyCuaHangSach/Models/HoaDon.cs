@@ -11,39 +11,39 @@ namespace QuanLyCuaHangSach.Models
     internal class HoaDon
     {
         private string maHD;
-        private string hoTenKH;
+        private string maKH;
         private string maNV;
         private DateTime ngayLap;
         private string soDienThoai;
-        List<ChiTietHoaDon> chiTietHoaDons = new List<ChiTietHoaDon>();
+        List<ChiTietHoaDon> chiTietHoaDon;
 
         public HoaDon()
         {
             this.maHD = null;
-            this.hoTenKH = null;
+            this.maKH = null;
             this.maNV = null;
             this.ngayLap = DateTime.Now;
             this.soDienThoai = null;
-            this.chiTietHoaDons = null;
+            this.chiTietHoaDon = new List<ChiTietHoaDon>();
         }
-        public HoaDon(string maHD, string hoTenKH, string maNV, DateTime ngayLap, string soDienThoai, List<ChiTietHoaDon> chiTietHoaDons)
+        public HoaDon(string maHD, string maKH, string maNV, DateTime ngayLap, string soDienThoai, List<ChiTietHoaDon> chiTietHoaDon)
         {
             this.maHD = maHD;
-            this.hoTenKH = hoTenKH;
+            this.maKH = maKH;
             this.maNV = maNV;
             this.ngayLap = ngayLap;
             this.soDienThoai = soDienThoai;
-            this.chiTietHoaDons = chiTietHoaDons;
+            this.chiTietHoaDon = chiTietHoaDon;
         }
         public string MaHD
         {
             get { return this.maHD; }
             set { this.maHD = value; }
         }
-        public string HoTenKH
+        public string MaKH
         {
-            get { return this.hoTenKH; }
-            set { this.hoTenKH = value; }
+            get { return this.maKH; }
+            set { this.maKH = value; }
         }
         public string MaNV
         {
@@ -60,10 +60,10 @@ namespace QuanLyCuaHangSach.Models
             get { return this.soDienThoai; }
             set { this.soDienThoai = value; }
         }
-        public List<ChiTietHoaDon> ChiTietHoaDons
+        public List<ChiTietHoaDon> ChiTietHoaDon
         {
-            get { return this.chiTietHoaDons; }
-            set { this.chiTietHoaDons = value; }
+            get { return this.chiTietHoaDon; }
+            set { this.chiTietHoaDon = value; }
         }
     }
 }

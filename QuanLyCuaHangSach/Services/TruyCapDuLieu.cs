@@ -1,6 +1,7 @@
 ﻿using QuanLyCuaHangSach.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -116,7 +117,7 @@ namespace QuanLyCuaHangSach.Services
                 using (StreamWriter sw = new StreamWriter(FileHD, false, Encoding.UTF8))
                 {
                     foreach (var hd in dsHoaDon)
-                        sw.WriteLine($"{hd.MaHD}|{hd.MaNV}|{hd.NgayLap:dd/MM/yyyy HH:mm:ss}");
+                        sw.WriteLine($"{hd.MaHD}|{hd.MaKH}|{hd.MaNV}|{hd.SoDienThoai}|{hd.NgayLap:dd/MM/yyyy HH:mm:ss}");
                 }
             }
             catch (Exception ex) { MessageBox.Show("Lỗi lưu Hóa Đơn: " + ex.Message); }
@@ -128,8 +129,13 @@ namespace QuanLyCuaHangSach.Services
                 Directory.CreateDirectory(Path.GetDirectoryName(FileCTHD));
                 using (StreamWriter sw = new StreamWriter(FileCTHD, false, Encoding.UTF8))
                 {
-                    foreach (var ct in dsChiTietHoaDon)
-                        sw.WriteLine($"{ct.MaSach}|{ct.TenSach}|{ct.GiaBan}|{ct.SoLuong}");
+                    //Duyệt từng hóa đơn
+                    foreach (var hd in dsHoaDon)
+                    {
+                        //Duyệt chi tiết của hóa đơn
+                        foreach (var ct in hd.ChiTietHoaDon)
+                            sw.WriteLine($"{ct.MaHD}|{ct.MaSach}|{ct.TenSach}|{ct.GiaBan}|{ct.SoLuong}|{ct.ThanhTien}");
+                    }
                 }
             }
             catch (Exception ex) { MessageBox.Show("Lỗi lưu Chi Tiết Hoá Đơn: " + ex.Message); }
@@ -196,7 +202,18 @@ namespace QuanLyCuaHangSach.Services
                     if (string.IsNullOrWhiteSpace(line)) continue;
                     string[] p = line.Split('|');
                     if (p.Length >= 5)
-                        dsHoaDon.Add(new HoaDon{MaHD = p[0], MaNV = p[1], NgayLap = DateTime.ParseExact(p[2], "dd/MM/yyyy HH:mm:ss", null),});
+                    {
+                        HoaDon hd = new HoaDon
+                        {
+                            MaHD = p[0],
+                            MaKH = p[1],
+                            MaNV = p[2],
+                            SoDienThoai = p[3],
+                            NgayLap = DateTime.ParseExact(p[4], "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture),
+                            ChiTietHoaDon = new List<ChiTietHoaDon>()
+                        };
+                        dsHoaDon.Add(hd);
+                    }
                 }
             }
             catch { }
@@ -211,11 +228,35 @@ namespace QuanLyCuaHangSach.Services
                 {
                     if (string.IsNullOrWhiteSpace(line)) continue;
                     string[] p = line.Split('|');
-                    if (p.Length >= 4)
-                        dsChiTietHoaDon.Add(new ChiTietHoaDon { MaSach = p[0], TenSach = p[1], GiaBan = decimal.Parse(p[2]), SoLuong = int.Parse(p[3]) });
+
+                    if (p.Length >= 5)
+                    {
+                        ChiTietHoaDon ct = new ChiTietHoaDon
+                        {
+                            MaHD = p[0],
+                            MaSach = p[1],
+                            TenSach = p[2],
+                            GiaBan = decimal.Parse(p[3]),
+                            SoLuong = int.Parse(p[4])
+                        };
+                        dsChiTietHoaDon.Add(ct);
+
+                        // Ghép chi tiết vào đúng hóa đơn
+                        foreach (HoaDon hd in dsHoaDon)
+                        {
+                            if (hd.MaHD == ct.MaHD)
+                            {
+                                hd.ChiTietHoaDon.Add(ct);
+                                break; // tìm thấy thì thoát vòng lặp
+                            }
+                        }
+                    }
                 }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi đọc Chi Tiết Hoá Đơn: " + ex.Message);
+            }
         }
     }
 }

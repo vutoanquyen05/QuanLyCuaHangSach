@@ -27,6 +27,7 @@ namespace QuanLyCuaHangSach
         {
             InitializeComponent();
         }
+
         private void window_Loaded(object sender, RoutedEventArgs e)
         {
             TruyCapDuLieu.khoiTao().DocKhachHang();
@@ -35,12 +36,14 @@ namespace QuanLyCuaHangSach
             TruyCapDuLieu.khoiTao().DocSach();
             HienThiDSSach();
         }
+
         private void HienThiDSSach()
         {
             List<Sach> dsSach = TruyCapDuLieu.khoiTao().getDSSach();
             dgvSach.ItemsSource = null;
             dgvSach.ItemsSource = dsSach.ToList();
         }
+
         private void HienThiDSKhachHang()
         {
             List<KhachHang> dsKhachHang = TruyCapDuLieu.khoiTao().getDSKhachHang();
@@ -50,31 +53,47 @@ namespace QuanLyCuaHangSach
 
         private void btnSach_Click(object sender, RoutedEventArgs e)
         {
-            SachWindow window = new SachWindow();
-            window.Show();
+            Window window = Application.Current.Windows.OfType<SachWindow>().FirstOrDefault();
+            if (window == null)
+                new SachWindow().Show();
+            else
+                window.Activate();
         }
 
         private void btnKhachHang_Click(object sender, RoutedEventArgs e)
         {
-            KhachHangWindow window = new KhachHangWindow();
-            window.Show();
+            Window window = Application.Current.Windows.OfType<KhachHangWindow>().FirstOrDefault();
+            if (window == null)
+                new KhachHangWindow().Show();
+            else
+                window.Activate();
         }
 
         private void btnNhanVien_Click(object sender, RoutedEventArgs e)
         {
-            NhanVienWindow window = new NhanVienWindow();
-            window.Show();
+            Window window = Application.Current.Windows.OfType<NhanVienWindow>().FirstOrDefault();
+            if (window == null)
+                new NhanVienWindow().Show();
+            else
+                window.Activate();
         }
 
         private void btnHoaDon_Click(object sender, RoutedEventArgs e)
         {
-
+            Window window = Application.Current.Windows.OfType<HoaDonWindow>().FirstOrDefault();
+            if (window == null)
+                new HoaDonWindow().Show();
+            else
+                window.Activate();
         }
 
         private void btnLapHoaDon_Click(object sender, RoutedEventArgs e)
         {
-            LapHoaDonWindow window = new LapHoaDonWindow();
-            window.Show();
+            Window window = Application.Current.Windows.OfType<LapHoaDonWindow>().FirstOrDefault();
+            if (window == null)
+                new LapHoaDonWindow().Show();
+            else
+                window.Activate();
         }
 
         private void btnLocSach_Click(object sender, RoutedEventArgs e)
