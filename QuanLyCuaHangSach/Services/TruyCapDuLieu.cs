@@ -73,6 +73,7 @@ namespace QuanLyCuaHangSach.Services
         {
             try
             {
+                Directory.CreateDirectory(Path.GetDirectoryName(FileSach));
                 using (StreamWriter sw = new StreamWriter(FileSach, false, Encoding.UTF8))
                 {
                     foreach (var s in dsSach)
@@ -85,6 +86,7 @@ namespace QuanLyCuaHangSach.Services
         {
             try
             {
+                Directory.CreateDirectory(Path.GetDirectoryName(FileKH));
                 using (StreamWriter sw = new StreamWriter(FileKH, false, Encoding.UTF8))
                 {
                     foreach (var kh in dsKhachHang)
@@ -97,6 +99,7 @@ namespace QuanLyCuaHangSach.Services
         {
             try
             {
+                Directory.CreateDirectory(Path.GetDirectoryName(FileNV));
                 using (StreamWriter sw = new StreamWriter(FileNV, false, Encoding.UTF8))
                 {
                     foreach (var nv in dsNhanVien)
@@ -109,6 +112,7 @@ namespace QuanLyCuaHangSach.Services
         {
             try
             {
+                Directory.CreateDirectory(Path.GetDirectoryName(FileHD));
                 using (StreamWriter sw = new StreamWriter(FileHD, false, Encoding.UTF8))
                 {
                     foreach (var hd in dsHoaDon)
@@ -121,6 +125,7 @@ namespace QuanLyCuaHangSach.Services
         {
             try
             {
+                Directory.CreateDirectory(Path.GetDirectoryName(FileCTHD));
                 using (StreamWriter sw = new StreamWriter(FileCTHD, false, Encoding.UTF8))
                 {
                     foreach (var ct in dsChiTietHoaDon)
