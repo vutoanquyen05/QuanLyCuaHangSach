@@ -124,7 +124,7 @@
                              Style="{StaticResource MaterialDesignFilledTextBox}"/>
 
                         <!--Nút-->
-                        <Button Grid.Column="2" x:Name="btnLoc" Content="Lọc" 
+                        <Button Grid.Column="2" x:Name="btnLoc" Content="Lọc" Click="btnLoc_Click" 
                                 Margin="10 0" Width="80" Height="35" HorizontalAlignment="Right"/>
                     </Grid>
                     

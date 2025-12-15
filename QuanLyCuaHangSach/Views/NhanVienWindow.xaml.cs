@@ -103,6 +103,41 @@ namespace QuanLyCuaHangSach.Views
             txtMaNV.Focus();
         }
 
+        private void btnLoc_Click(object sender, RoutedEventArgs e)
+        {
+            // Lấy danh sách gốc
+            List<NhanVien> dsNV = TruyCapDuLieu.khoiTao().getDSNhanVien();
+            List<NhanVien> dsKetQua = new List<NhanVien>();
+
+            // Đọc dữ liệu từ TextBox và ComboBox
+            string hoTen = txtLocHoTen.Text != null ? txtLocHoTen.Text.Trim() : string.Empty;
+            string chucVu = cboLocChucVu.SelectedItem != null ? (cboLocChucVu.SelectedItem as ComboBoxItem).Content.ToString() : string.Empty;
+
+            // Nếu không nhập gì và chọn "Tất cả" thì hiển thị toàn bộ
+            if (string.IsNullOrEmpty(hoTen) && (string.IsNullOrEmpty(chucVu) || chucVu == "Tất cả"))
+                HienThiDSNhanVien();
+
+            // Lọc thủ công
+            foreach (NhanVien nv in dsNV)
+            {
+                // Lọc theo họ tên
+                if (!string.IsNullOrEmpty(hoTen))
+                    if (string.IsNullOrEmpty(nv.TenNV) || nv.TenNV.IndexOf(hoTen, StringComparison.OrdinalIgnoreCase) < 0)
+                        continue;
+
+                // Lọc theo chức vụ
+                if (!string.IsNullOrEmpty(chucVu) && chucVu != "Tất cả")
+                    if (string.IsNullOrEmpty(nv.ChucVu) || nv.ChucVu.IndexOf(chucVu, StringComparison.OrdinalIgnoreCase) < 0)
+                        continue;
+
+                dsKetQua.Add(nv);
+            }
+
+            // Gán kết quả vào DataGrid
+            dgvNhanVien.ItemsSource = dsKetQua;
+        }
+
+
         private void dgvNhanVien_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (dgvNhanVien.SelectedItem is NhanVien select)

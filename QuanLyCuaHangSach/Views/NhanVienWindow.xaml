@@ -133,11 +133,13 @@
                              Width="175" Margin="5 0"
                              IsEnabled="{Binding Path=IsChecked, ElementName=FilledComboBoxEnabledCheckBox}"
                              Style="{StaticResource MaterialDesignFilledComboBox}">
+                            <ComboBoxItem Content="Tất cả" IsSelected="True"/>
                             <ComboBoxItem Content="Nhân viên" />
                             <ComboBoxItem Content="Quản lý" />
                         </ComboBox>
+                        
                         <!--Nút-->
-                        <Button Grid.Column="2" x:Name="btnTimMaNV" Content="Lọc" 
+                        <Button Grid.Column="2" x:Name="btnLoc" Content="Lọc" Click="btnLoc_Click"
                                 Margin="10 0" Width="80" Height="35" HorizontalAlignment="Right"/>
                     </Grid>
 

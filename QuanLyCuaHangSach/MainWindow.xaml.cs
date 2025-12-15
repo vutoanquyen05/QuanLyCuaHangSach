@@ -96,14 +96,78 @@ namespace QuanLyCuaHangSach
                 window.Activate();
         }
 
+        private void btnLamMoi_Click(object sender, RoutedEventArgs e)
+        {
+            TruyCapDuLieu.khoiTao().DocKhachHang();
+            HienThiDSKhachHang();
+
+            TruyCapDuLieu.khoiTao().DocSach();
+            HienThiDSSach();
+        }
+
         private void btnLocSach_Click(object sender, RoutedEventArgs e)
         {
+            // Lấy danh sách gốc
+            List<Sach> dsSach = TruyCapDuLieu.khoiTao().getDSSach();
+            List<Sach> dsKetQua = new List<Sach>();
 
+            // Đọc dữ liệu từ TextBox
+            string maSach = txtLocMaSach.Text != null ? txtLocMaSach.Text.Trim() : string.Empty;
+            string tenSach = txtLocTenSach.Text != null ? txtLocTenSach.Text.Trim() : string.Empty;
+
+            // Nếu không nhập gì thì hiển thị toàn bộ
+            if (string.IsNullOrEmpty(maSach) && string.IsNullOrEmpty(tenSach))
+                HienThiDSSach();
+
+            // Lọc thủ công
+            foreach (Sach s in dsSach)
+            {
+                // Kiểm tra MaSach
+                if (!string.IsNullOrEmpty(maSach))
+                    if (string.IsNullOrEmpty(s.MaSach) || s.MaSach.IndexOf(maSach, StringComparison.OrdinalIgnoreCase) < 0)
+                        continue;
+
+                // Kiểm tra TenSach
+                if (!string.IsNullOrEmpty(tenSach))
+                    if (string.IsNullOrEmpty(s.TenSach) || s.TenSach.IndexOf(tenSach, StringComparison.OrdinalIgnoreCase) < 0)
+                        continue;
+
+                dsKetQua.Add(s);
+            }
+            // Gán kết quả vào DataGrid
+            dgvSach.ItemsSource = dsKetQua;
         }
 
         private void btnLocKhachHang_Click(object sender, RoutedEventArgs e)
         {
+            // Lấy danh sách gốc
+            List<KhachHang> dsKH = TruyCapDuLieu.khoiTao().getDSKhachHang();
+            List<KhachHang> dsKetQua = new List<KhachHang>();
 
+            // Đọc dữ liệu từ TextBox
+            string hoTen = txtLocHoTen.Text != null ? txtLocHoTen.Text.Trim() : string.Empty;
+            string sdt = txtLocSDT.Text != null ? txtLocSDT.Text.Trim() : string.Empty;
+
+            // Nếu không nhập gì thì hiển thị toàn bộ
+            if (string.IsNullOrEmpty(hoTen) && string.IsNullOrEmpty(sdt))
+                HienThiDSKhachHang();
+
+            // Lọc thủ công
+            foreach (KhachHang kh in dsKH)
+            {
+                if (!string.IsNullOrEmpty(hoTen))
+                    if (string.IsNullOrEmpty(kh.TenKH) || kh.TenKH.IndexOf(hoTen, StringComparison.OrdinalIgnoreCase) < 0)
+                        continue;
+
+                if (!string.IsNullOrEmpty(sdt))
+                    if (string.IsNullOrEmpty(kh.SoDienThoai) || kh.SoDienThoai.IndexOf(sdt, StringComparison.OrdinalIgnoreCase) < 0)
+                        continue;
+
+                dsKetQua.Add(kh);
+            }
+
+            // Gán kết quả vào DataGrid
+            dgvKhachHang.ItemsSource = dsKetQua;
         }
     }
 }

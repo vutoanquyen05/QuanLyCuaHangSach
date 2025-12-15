@@ -124,6 +124,39 @@ namespace QuanLyCuaHangSach.Views
             txtMaSach.Focus();
         }
 
+        private void btnLoc_Click(object sender, RoutedEventArgs e)
+        {
+            // Lấy danh sách gốc
+            List<Sach> dsSach = TruyCapDuLieu.khoiTao().getDSSach();
+            List<Sach> dsKetQua = new List<Sach>();
+
+            // Đọc dữ liệu từ TextBox
+            string maSach = txtLocMaSach.Text != null ? txtLocMaSach.Text.Trim() : string.Empty;
+            string tenSach = txtLocTenSach.Text != null ? txtLocTenSach.Text.Trim() : string.Empty;
+
+            // Nếu không nhập gì thì hiển thị toàn bộ
+            if (string.IsNullOrEmpty(maSach) && string.IsNullOrEmpty(tenSach))
+                HienThiDSSach();
+
+            // Lọc thủ công
+            foreach (Sach s in dsSach)
+            {
+                // Kiểm tra MaSach
+                if (!string.IsNullOrEmpty(maSach))
+                    if (string.IsNullOrEmpty(s.MaSach) || s.MaSach.IndexOf(maSach, StringComparison.OrdinalIgnoreCase) < 0)
+                        continue;
+
+                // Kiểm tra TenSach
+                if (!string.IsNullOrEmpty(tenSach))
+                    if (string.IsNullOrEmpty(s.TenSach) || s.TenSach.IndexOf(tenSach, StringComparison.OrdinalIgnoreCase) < 0)
+                        continue;
+
+                dsKetQua.Add(s);
+            }
+            // Gán kết quả vào DataGrid
+            dgvSach.ItemsSource = dsKetQua;
+        }
+
         private void dgvNhanVien_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // Hiển thị thông tin sách được chọn lên các ô nhập liệu

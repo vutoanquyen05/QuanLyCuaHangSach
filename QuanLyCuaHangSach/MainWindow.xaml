@@ -58,8 +58,9 @@
                         <ColumnDefinition></ColumnDefinition>
                         <ColumnDefinition></ColumnDefinition>
                         <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    
+
                     <!--Mục-->
                     <Button Grid.Column="0" x:Name="btnSach" Click="btnSach_Click">
                         <Grid>
@@ -131,6 +132,20 @@
                             </Grid>
                         </Grid>
                     </Button>
+                    <Button Grid.Column="5" x:Name="btnLamMoi" Click="btnLamMoi_Click">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0">
+                                <TextBlock Text="Làm mới" HorizontalAlignment="Center"></TextBlock>
+                            </Grid>
+                            <Grid Grid.Row="1">
+                                <materialDesign:PackIcon Width="24" Height="24"  HorizontalAlignment="Center"  Kind="Autorenew" />
+                            </Grid>
+                        </Grid>
+                    </Button>
                 </Grid>
             </Grid>
 
@@ -183,7 +198,7 @@
                                          Style="{StaticResource MaterialDesignFilledTextBox}"/>
 
                                 <!--Nút-->
-                                <Button Grid.Column="2" x:Name="btnLocKhachHang" Content="Lọc" 
+                                <Button Grid.Column="2" x:Name="btnLocKhachHang" Content="Lọc" Click="btnLocKhachHang_Click" 
                                         Margin="10 0" Width="80" Height="35"/>
                             </Grid>
                         </Grid>
@@ -229,12 +244,12 @@
                                     <ColumnDefinition></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
                                 <!--Thông tin cần lọc-->
-                                <TextBox Grid.Column="0" x:Name="txtMaSach" materialDesign:HintAssist.Hint="Mã sách"
+                                <TextBox Grid.Column="0" x:Name="txtLocMaSach" materialDesign:HintAssist.Hint="Mã sách"
                                          Width="150" Height="40" Margin="5 0" MaxWidth="150" MaxHeight="40"
                                          TextWrapping="Wrap"
                                          IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignFilledTextBoxEnabledComboBox}"
                                          Style="{StaticResource MaterialDesignFilledTextBox}"/>
-                                <TextBox Grid.Column="1" x:Name="txtTenSach" materialDesign:HintAssist.Hint="Tên sách"
+                                <TextBox Grid.Column="1" x:Name="txtLocTenSach" materialDesign:HintAssist.Hint="Tên sách"
                                          Width="150" Height="40" Margin="5 0" MaxWidth="150" MaxHeight="40"
                                          TextWrapping="Wrap"
                                          IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignFilledTextBoxEnabledComboBox}"

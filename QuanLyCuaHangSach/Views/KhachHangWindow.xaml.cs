@@ -100,6 +100,39 @@ namespace QuanLyCuaHangSach.Views
             txtMaKH.Focus();
         }
 
+        private void btnLoc_Click(object sender, RoutedEventArgs e)
+        {
+            // Lấy danh sách gốc
+            List<KhachHang> dsKH = TruyCapDuLieu.khoiTao().getDSKhachHang();
+            List<KhachHang> dsKetQua = new List<KhachHang>();
+
+            // Đọc dữ liệu từ TextBox
+            string hoTen = txtLocHoTen.Text != null ? txtLocHoTen.Text.Trim() : string.Empty;
+            string sdt = txtLocSDT.Text != null ? txtLocSDT.Text.Trim() : string.Empty;
+
+            // Nếu không nhập gì thì hiển thị toàn bộ
+            if (string.IsNullOrEmpty(hoTen) && string.IsNullOrEmpty(sdt))
+                HienThiDSKhachHang();
+
+            // Lọc thủ công
+            foreach (KhachHang kh in dsKH)
+            {
+                if (!string.IsNullOrEmpty(hoTen))
+                    if (string.IsNullOrEmpty(kh.TenKH) || kh.TenKH.IndexOf(hoTen, StringComparison.OrdinalIgnoreCase) < 0)
+                        continue;
+
+                if (!string.IsNullOrEmpty(sdt))
+                    if (string.IsNullOrEmpty(kh.SoDienThoai) || kh.SoDienThoai.IndexOf(sdt, StringComparison.OrdinalIgnoreCase) < 0)
+                        continue;
+
+                dsKetQua.Add(kh);
+            }
+
+            // Gán kết quả vào DataGrid
+            dgvKhachHang.ItemsSource = dsKetQua;
+        }
+
+
         private void dgvKhachHang_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (dgvKhachHang.SelectedItem is KhachHang select)
