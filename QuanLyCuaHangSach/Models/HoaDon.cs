@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -60,6 +61,18 @@ namespace QuanLyCuaHangSach.Models
             get { return this.soDienThoai; }
             set { this.soDienThoai = value; }
         }
+        public decimal TinhTongTien()
+        {
+            decimal tongTien = 0;
+            foreach (ChiTietHoaDon cthd in this.chiTietHoaDon)
+                tongTien += cthd.ThanhTien;
+            return tongTien;
+        }
+        public decimal TongTien
+        {
+            get { return TinhTongTien(); }
+        }
+
         public List<ChiTietHoaDon> ChiTietHoaDon
         {
             get { return this.chiTietHoaDon; }

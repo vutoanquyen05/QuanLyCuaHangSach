@@ -29,20 +29,16 @@ namespace QuanLyCuaHangSach.Views
 
         private void HienThiDSHoaDon(List<HoaDon> dsHoaDon)
         {
-            dsHoaDon = new List<HoaDon>();
             dgvHoaDon.ItemsSource = null;
             dgvHoaDon.ItemsSource = dsHoaDon.ToList();
 
             //Cập nhật số lượng hóa đơn
             txtSoLuongHD.Text = dsHoaDon.Count.ToString();
 
-            //Tính và cập nhật tổng doanh thu
+            // Tính và cập nhật tổng doanh thu
             decimal tongDoanhThu = 0;
             foreach (HoaDon hd in dsHoaDon)
-            {
-                foreach (ChiTietHoaDon cthd in hd.ChiTietHoaDon)
-                    tongDoanhThu += cthd.ThanhTien;
-            }
+                tongDoanhThu += hd.TongTien;
             txtTongDoanhThu.Text = tongDoanhThu.ToString("N0");
         }
 
@@ -53,9 +49,14 @@ namespace QuanLyCuaHangSach.Views
             dtpTuNgay.SelectedDate = new DateTime(today.Year, today.Month, 1); // Ngày 1 đầu tháng
             dtpDenNgay.SelectedDate = today;
 
-            // Khởi tạo XuLyHoaDon và đọc dữ liệu hóa đơn
-            xuLyHoaDon = new XuLyHoaDon();
+            // Đọc dữ liệu từ file
+            TruyCapDuLieu.khoiTao().DocSach();
             TruyCapDuLieu.khoiTao().DocHoaDon();
+            TruyCapDuLieu.khoiTao().DocChiTietHoaDon();
+
+            xuLyHoaDon = new XuLyHoaDon();
+
+            // Hiển thị danh sách hóa đơn
             List<HoaDon> dsHoaDon = TruyCapDuLieu.khoiTao().getDSHoaDon();
             HienThiDSHoaDon(dsHoaDon);
         }
@@ -71,7 +72,7 @@ namespace QuanLyCuaHangSach.Views
         private void btnLoc_Click(object sender, RoutedEventArgs e)
         {
             // Lọc hóa đơn theo khoảng thời gian
-            if (dtpTuNgay.SelectedDate != null || dtpDenNgay.SelectedDate != null)
+            if (dtpTuNgay.SelectedDate != null && dtpDenNgay.SelectedDate != null)
             {
                 DateTime tuNgay = dtpTuNgay.SelectedDate.Value.Date; // Lấy phần ngày, bỏ phần giờ (00:00:00)
                 DateTime denNgay = dtpDenNgay.SelectedDate.Value.Date.AddDays(1).AddSeconds(-1); // Lấy đến 23:59:59 của ngày kết thúc

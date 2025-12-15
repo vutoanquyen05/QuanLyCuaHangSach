@@ -61,7 +61,7 @@ namespace QuanLyCuaHangSach.Models
 
         private decimal TinhThanhTien()
         {
-            return this.soLuong * this.sach.GiaBan;
+            return this.soLuong* this.sach.GiaBan;
         }
         public decimal ThanhTien
         {
