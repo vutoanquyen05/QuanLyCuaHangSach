@@ -87,7 +87,8 @@ namespace QuanLyCuaHangSach.Views
                 }
                 HienThiDSHoaDon(ketQuaLoc);
             }
-            else MessageBox.Show("Vui lòng chọn thời gian!");
+            else
+                MessageBox.Show("Vui lòng chọn thời gian!");
         }
     }
 }

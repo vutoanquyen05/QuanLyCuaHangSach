@@ -49,7 +49,10 @@ namespace QuanLyCuaHangSach.Views
             {
                 // Kiểm tra nhập liệu
                 if (string.IsNullOrWhiteSpace(txtMaNV.Text))
+                {
                     MessageBox.Show("Vui lòng nhập mã nhân viên");
+                    return;
+                }
 
                 NhanVien nhanVienMoi = new NhanVien(txtMaNV.Text, txtTenNV.Text, cboChucVu.Text, txtSDT.Text, txtMaQL.Text);
                 bool ketQuaThem = xuLyNhanVien.Them(nhanVienMoi);
@@ -126,7 +129,11 @@ namespace QuanLyCuaHangSach.Views
 
             // Nếu không nhập gì và chọn "Tất cả" thì hiển thị toàn bộ
             if (string.IsNullOrEmpty(hoTen) && (string.IsNullOrEmpty(chucVu) || chucVu == "Tất cả"))
+            {
                 HienThiDSNhanVien();
+                return;
+            }
+
 
             foreach (NhanVien nv in dsNV)
             {

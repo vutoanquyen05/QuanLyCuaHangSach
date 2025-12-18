@@ -101,15 +101,19 @@ namespace QuanLyCuaHangSach.Views
         private void btnThanhToan_Click(object sender, RoutedEventArgs e)
         {
             if (gioHang.Count == 0)
+            {
                 MessageBox.Show("Giỏ hàng trống");
-
-            // Kiểm tra nhập liệu
+                return;
+            }
             if (string.IsNullOrWhiteSpace(txtMaHD.Text) ||
                 string.IsNullOrWhiteSpace(txtMaKH.Text) ||
                 string.IsNullOrWhiteSpace(txtMaNV.Text) ||
                 string.IsNullOrWhiteSpace(txtSDT.Text)
                 )
+            {
                 MessageBox.Show("Vui lòng nhập đầy đủ thông tin hóa đơn");
+                return;
+            }
 
             //Tạo hóa đơn tạm thời
             HoaDon hoaDon = new HoaDon()

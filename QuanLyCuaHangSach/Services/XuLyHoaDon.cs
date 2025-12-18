@@ -64,18 +64,29 @@ namespace QuanLyCuaHangSach.Services
             if (KiemTraMaHoaDon(hoaDon))
                 return false;
 
+            // Kiểm tra tồn kho trước
+            foreach (ChiTietHoaDon chiTiet in hoaDon.ChiTietHoaDon)
+            {
+                Sach s = this.dsSach.FirstOrDefault(x => x.MaSach == chiTiet.MaSach);
+
+                // Nếu không đủ thì dừng
+                if (s == null || s.SoLuong < chiTiet.SoLuong)
+                    return false;
+            }
+
             this.dsHoaDon.Add(hoaDon);
 
-            // Thêm chi tiết hoá đơn và cập nhật số lượng sách
             foreach (ChiTietHoaDon chiTiet in hoaDon.ChiTietHoaDon)
             {
                 chiTiet.MaHD = hoaDon.MaHD;
                 this.dsChiTietHoaDon.Add(chiTiet);
-                if (!CapNhatSoLuongSach(chiTiet.MaSach, chiTiet.SoLuong))
-                    return false;
+
+                // Cập nhật tồn kho
+                CapNhatSoLuongSach(chiTiet.MaSach, chiTiet.SoLuong);
             }
 
             return true;
         }
+
     }
 }

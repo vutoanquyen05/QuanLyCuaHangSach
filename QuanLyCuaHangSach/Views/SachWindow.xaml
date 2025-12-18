@@ -144,7 +144,7 @@
 
                     <!--Bảng dữ liệu-->
                     <DataGrid Grid.Row="1" x:Name="dgvSach"
-                              Margin="5" AutoGenerateColumns="True" IsReadOnly="True" SelectionChanged="dgvNhanVien_SelectionChanged">
+                              Margin="5" AutoGenerateColumns="True" IsReadOnly="True" SelectionChanged="dgvSach_SelectionChanged">
                     </DataGrid>
                 </Grid>
             </materialDesign:Card>

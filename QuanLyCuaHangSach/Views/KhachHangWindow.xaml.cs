@@ -48,7 +48,10 @@ namespace QuanLyCuaHangSach.Views
             try
             {
                 if (string.IsNullOrWhiteSpace(txtMaKH.Text))
+                {
                     MessageBox.Show("Vui lòng nhập mã khách hàng");
+                    return;
+                }
 
                 KhachHang khachHangMoi = new KhachHang(txtMaKH.Text, txtTenKH.Text, txtSDT.Text, txtDiaChi.Text);
                 bool ketQuaThem = xuLyKhachHang.Them(khachHangMoi);
@@ -124,7 +127,11 @@ namespace QuanLyCuaHangSach.Views
             string sdt = txtLocSDT.Text != null ? txtLocSDT.Text.Trim() : string.Empty;
 
             if (string.IsNullOrEmpty(hoTen) && string.IsNullOrEmpty(sdt))
+            {
                 HienThiDSKhachHang();
+                return;
+            }
+
 
             foreach (KhachHang kh in dsKH)
             {

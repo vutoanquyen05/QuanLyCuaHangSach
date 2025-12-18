@@ -53,7 +53,11 @@ namespace QuanLyCuaHangSach.Views
             {
                 // Kiểm tra nhập liệu
                 if (string.IsNullOrWhiteSpace(txtMaSach.Text))
+                {
                     MessageBox.Show("Vui lòng nhập mã sách");
+                    return;
+                }
+
 
                 Sach sachMoi = new Sach(txtMaSach.Text, txtTenSach.Text, txtTenTG.Text, txtMaNXB.Text, decimal.Parse(txtGiaBan.Text), int.Parse(txtSoLuong.Text));
                 bool ketQuaThem = xuLySach.Them(sachMoi);
@@ -132,7 +136,11 @@ namespace QuanLyCuaHangSach.Views
 
             // Nếu không nhập gì thì hiển thị toàn bộ
             if (string.IsNullOrEmpty(maSach) && string.IsNullOrEmpty(tenSach))
+            {
                 HienThiDSSach();
+                return;
+            }
+
 
             foreach (Sach s in dsSach)
             {
@@ -152,7 +160,7 @@ namespace QuanLyCuaHangSach.Views
             dgvSach.ItemsSource = dsKetQua;
         }
 
-        private void dgvNhanVien_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void dgvSach_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (dgvSach.SelectedItem is Sach select)
             {
