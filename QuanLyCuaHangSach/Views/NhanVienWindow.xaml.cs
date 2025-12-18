@@ -45,21 +45,25 @@ namespace QuanLyCuaHangSach.Views
 
         private void btnThem_Click(object sender, RoutedEventArgs e)
         {
-            // Kiểm tra nhập liệu
-            if (string.IsNullOrWhiteSpace(txtMaNV.Text))
-                MessageBox.Show("Vui lòng nhập mã nhân viên");
-
-            NhanVien nhanVienMoi = new NhanVien(txtMaNV.Text, txtTenNV.Text, cboChucVu.Text, txtSDT.Text, txtMaQL.Text);
-            bool ketQuaThem = xuLyNhanVien.Them(nhanVienMoi);
-
-            if (ketQuaThem)
+            try
             {
-                MessageBox.Show("Thêm nhân viên thành công!");
-                TruyCapDuLieu.khoiTao().LuuNhanVien();
-                HienThiDSNhanVien();
+                // Kiểm tra nhập liệu
+                if (string.IsNullOrWhiteSpace(txtMaNV.Text))
+                    MessageBox.Show("Vui lòng nhập mã nhân viên");
+
+                NhanVien nhanVienMoi = new NhanVien(txtMaNV.Text, txtTenNV.Text, cboChucVu.Text, txtSDT.Text, txtMaQL.Text);
+                bool ketQuaThem = xuLyNhanVien.Them(nhanVienMoi);
+
+                if (ketQuaThem)
+                {
+                    MessageBox.Show("Thêm nhân viên thành công!");
+                    TruyCapDuLieu.khoiTao().LuuNhanVien();
+                    HienThiDSNhanVien();
+                }
+                else
+                    MessageBox.Show("Mã nhân viên đã tồn tại");
             }
-            else
-                MessageBox.Show("Mã nhân viên đã tồn tại");
+            catch (Exception ex) {  MessageBox.Show("Lỗi khi thêm nhân viên: " + ex.Message); }
         }
 
         private void btnSua_Click(object sender, RoutedEventArgs e)

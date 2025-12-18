@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace QuanLyCuaHangSach.Models
 {
     [Serializable]
-   public class Sach
+    internal class Sach
     {
         private string maSach;
         private string tenSach;

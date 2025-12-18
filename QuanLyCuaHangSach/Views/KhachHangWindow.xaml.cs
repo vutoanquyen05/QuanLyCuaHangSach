@@ -45,20 +45,24 @@ namespace QuanLyCuaHangSach.Views
 
         private void btnThem_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtMaKH.Text))
-                MessageBox.Show("Vui lòng nhập mã khách hàng");
-
-            KhachHang khachHangMoi = new KhachHang(txtMaKH.Text, txtTenKH.Text, txtSDT.Text, txtDiaChi.Text);
-            bool ketQuaThem = xuLyKhachHang.Them(khachHangMoi);
-
-            if (ketQuaThem)
+            try
             {
-                MessageBox.Show("Thêm khách hàng thành công!");
-                TruyCapDuLieu.khoiTao().LuuKhachHang();
-                HienThiDSKhachHang();
+                if (string.IsNullOrWhiteSpace(txtMaKH.Text))
+                    MessageBox.Show("Vui lòng nhập mã khách hàng");
+
+                KhachHang khachHangMoi = new KhachHang(txtMaKH.Text, txtTenKH.Text, txtSDT.Text, txtDiaChi.Text);
+                bool ketQuaThem = xuLyKhachHang.Them(khachHangMoi);
+
+                if (ketQuaThem)
+                {
+                    MessageBox.Show("Thêm khách hàng thành công!");
+                    TruyCapDuLieu.khoiTao().LuuKhachHang();
+                    HienThiDSKhachHang();
+                }
+                else
+                    MessageBox.Show("Mã khách hàng đã tồn tại");
             }
-            else
-                MessageBox.Show("Mã khách hàng đã tồn tại");
+            catch (Exception ex) { MessageBox.Show("Lỗi khi thêm khách hàng: " + ex.Message); }
         }
 
         private void btnSua_Click(object sender, RoutedEventArgs e)

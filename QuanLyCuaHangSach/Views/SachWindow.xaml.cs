@@ -49,21 +49,25 @@ namespace QuanLyCuaHangSach.Views
 
         private void btnThem_Click(object sender, RoutedEventArgs e)
         {
-            // Kiểm tra nhập liệu
-            if (string.IsNullOrWhiteSpace(txtMaSach.Text))
-                MessageBox.Show("Vui lòng nhập mã sách");
-
-            Sach sachMoi = new Sach(txtMaSach.Text, txtTenSach.Text, txtTenTG.Text, txtMaNXB.Text, decimal.Parse(txtGiaBan.Text), int.Parse(txtSoLuong.Text));
-            bool ketQuaThem = xuLySach.Them(sachMoi);
-
-            if (ketQuaThem)
+            try
             {
-                MessageBox.Show("Thêm sách thành công!");
-                TruyCapDuLieu.khoiTao().LuuSach();
-                HienThiDSSach();
+                // Kiểm tra nhập liệu
+                if (string.IsNullOrWhiteSpace(txtMaSach.Text))
+                    MessageBox.Show("Vui lòng nhập mã sách");
+
+                Sach sachMoi = new Sach(txtMaSach.Text, txtTenSach.Text, txtTenTG.Text, txtMaNXB.Text, decimal.Parse(txtGiaBan.Text), int.Parse(txtSoLuong.Text));
+                bool ketQuaThem = xuLySach.Them(sachMoi);
+
+                if (ketQuaThem)
+                {
+                    MessageBox.Show("Thêm sách thành công!");
+                    TruyCapDuLieu.khoiTao().LuuSach();
+                    HienThiDSSach();
+                }
+                else
+                    MessageBox.Show("Mã sách đã tồn tại");
             }
-            else
-                MessageBox.Show("Mã sách đã tồn tại");
+            catch (Exception ex) { MessageBox.Show("Vui lòng nhập đúng định dạng cho Giá bán và Số lượng"); }
         }
 
         private void btnSua_Click(object sender, RoutedEventArgs e)
