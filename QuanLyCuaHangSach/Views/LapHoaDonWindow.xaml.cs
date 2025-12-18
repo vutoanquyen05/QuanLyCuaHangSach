@@ -25,6 +25,8 @@ namespace QuanLyCuaHangSach.Views
     public partial class LapHoaDonWindow : Window
     {
         private XuLyHoaDon xuLyHoaDon;
+
+        // Giỏ hàng tạm thời
         private class GioHang
         {
             public string MaSach { get; set; }
@@ -39,38 +41,41 @@ namespace QuanLyCuaHangSach.Views
             InitializeComponent();
         }
 
-        private void window_Loaded(object sender, RoutedEventArgs e)
-        {
-            xuLyHoaDon = new XuLyHoaDon();
-            TruyCapDuLieu.khoiTao().DocSach();
-            HienThiDSSach();
-            HienThiGioHang();
-        }
         private void HienThiDSSach()
         {
+            // Lấy danh sách sách từ TruyCapDuLieu và hiển thị lên DataGrid
             List<Sach> dsSach = TruyCapDuLieu.khoiTao().getDSSach();
             dgvSach.ItemsSource = null;
             dgvSach.ItemsSource = dsSach.ToList();
         }
-        
+
         private void HienThiGioHang()
         {
             dgvGioHang.ItemsSource = null;
             dgvGioHang.ItemsSource = gioHang.ToList();
 
+            // Cập nhật tổng tiền
             decimal tongTien = 0;
             foreach (GioHang sach in gioHang)
                 tongTien += sach.ThanhTien;
-            txtTongTien.Text = tongTien.ToString("N0");
+            txtTongTien.Text = tongTien.ToString("N0"); // Định dạng số với dấu phân cách hàng nghìn
+        }
+
+        private void window_Loaded(object sender, RoutedEventArgs e)
+        {
+            // Khởi tạo XuLyHoaDon và đọc dữ liệu sách
+            xuLyHoaDon = new XuLyHoaDon();
+            TruyCapDuLieu.khoiTao().DocSach();
+            HienThiDSSach();
+            HienThiGioHang();
         }
 
         private void btnThem_Click(object sender, RoutedEventArgs e)
         {
+            // Kiểm tra nhập liệu
             if (string.IsNullOrWhiteSpace(txtMaSach.Text))
-            {
                 MessageBox.Show("Vui lòng nhập hoặc chọn sách");
-                return;
-            }
+
             if (dgvSach.SelectedItem is Sach sach)
             {
                 GioHang item = new GioHang()
@@ -96,20 +101,17 @@ namespace QuanLyCuaHangSach.Views
         private void btnThanhToan_Click(object sender, RoutedEventArgs e)
         {
             if (gioHang.Count == 0)
-            {
                 MessageBox.Show("Giỏ hàng trống");
-                return;
-            }
 
+            // Kiểm tra nhập liệu
             if (string.IsNullOrWhiteSpace(txtMaHD.Text) ||
                 string.IsNullOrWhiteSpace(txtMaKH.Text) ||
                 string.IsNullOrWhiteSpace(txtMaNV.Text) ||
-                string.IsNullOrWhiteSpace(txtSDT.Text))
-            {
+                string.IsNullOrWhiteSpace(txtSDT.Text)
+                )
                 MessageBox.Show("Vui lòng nhập đầy đủ thông tin hóa đơn");
-                return;
-            }
-            //Tạo hóa đơn
+
+            //Tạo hóa đơn tạm thời
             HoaDon hoaDon = new HoaDon()
             {
                 MaHD = txtMaHD.Text,
@@ -145,6 +147,7 @@ namespace QuanLyCuaHangSach.Views
             else
                 MessageBox.Show("Mã hóa đơn đã tồn tại hoặc sách trong giỏ hàng không đủ số lượng!");
         }
+
         private void dgvSach_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (dgvSach.SelectedItem is Sach sach)

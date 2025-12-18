@@ -39,6 +39,8 @@ namespace QuanLyCuaHangSach.Services
             dsHoaDon = new List<HoaDon>();
             dsChiTietHoaDon = new List<ChiTietHoaDon>();
         }
+
+        //--- PHƯƠNG THỨC KHỞI TẠO ---
         public static TruyCapDuLieu khoiTao()
         {
             if (instance == null)
@@ -75,7 +77,9 @@ namespace QuanLyCuaHangSach.Services
         {
             try
             {
+                // Tạo thư mục nếu chưa tồn tại
                 Directory.CreateDirectory(Path.GetDirectoryName(FileSach));
+                // Ghi dữ liệu vào file
                 using (StreamWriter sw = new StreamWriter(FileSach, false, Encoding.UTF8))
                 {
                     foreach (var s in dsSach)
@@ -88,7 +92,9 @@ namespace QuanLyCuaHangSach.Services
         {
             try
             {
+                // Tạo thư mục nếu chưa tồn tại
                 Directory.CreateDirectory(Path.GetDirectoryName(FileKH));
+                // Ghi dữ liệu vào file
                 using (StreamWriter sw = new StreamWriter(FileKH, false, Encoding.UTF8))
                 {
                     foreach (var kh in dsKhachHang)
@@ -101,7 +107,9 @@ namespace QuanLyCuaHangSach.Services
         {
             try
             {
+                // Tạo thư mục nếu chưa tồn tại
                 Directory.CreateDirectory(Path.GetDirectoryName(FileNV));
+                // Ghi dữ liệu vào file
                 using (StreamWriter sw = new StreamWriter(FileNV, false, Encoding.UTF8))
                 {
                     foreach (var nv in dsNhanVien)
@@ -114,7 +122,9 @@ namespace QuanLyCuaHangSach.Services
         {
             try
             {
+                // Tạo thư mục nếu chưa tồn tại
                 Directory.CreateDirectory(Path.GetDirectoryName(FileHD));
+                // Ghi dữ liệu vào file
                 using (StreamWriter sw = new StreamWriter(FileHD, false, Encoding.UTF8))
                 {
                     foreach (var hd in dsHoaDon)
@@ -127,7 +137,9 @@ namespace QuanLyCuaHangSach.Services
         {
             try
             {
+                // Tạo thư mục nếu chưa tồn tại
                 Directory.CreateDirectory(Path.GetDirectoryName(FileCTHD));
+                // Ghi dữ liệu vào file
                 using (StreamWriter sw = new StreamWriter(FileCTHD, false, Encoding.UTF8))
                 {
                     //Duyệt từng hóa đơn
@@ -146,14 +158,22 @@ namespace QuanLyCuaHangSach.Services
         //--- CÁC PHƯƠNG THỨC ĐỌC FILE ---
         public void DocSach()
         {
+            // Nếu file không tồn tại thì thoát
             if (!File.Exists(FileSach)) return;
+
+            // Xóa dữ liệu cũ trong danh sách
             dsSach.Clear();
             try
             {
+                // Đọc từng dòng trong file
                 foreach (string line in File.ReadLines(FileSach, Encoding.UTF8))
                 {
                     if (string.IsNullOrWhiteSpace(line)) continue;
+
+                    // Mỗi phần tử cách nhau bởi dấu '|' sẽ được lưu vào mảng p
                     string[] p = line.Split('|');
+
+                    // Kiểm tra đủ phần tử rồi thêm vào danh sách
                     if (p.Length >= 6)
                         dsSach.Add(new Sach { MaSach = p[0], TenSach = p[1], TenTG = p[2], MaNXB = p[3], GiaBan = decimal.Parse(p[4]), SoLuong = int.Parse(p[5]) });
                 }
@@ -162,14 +182,23 @@ namespace QuanLyCuaHangSach.Services
         }
         public void DocKhachHang()
         {
+            // Nếu file không tồn tại thì thoát
             if (!File.Exists(FileKH)) return;
+
+            // Xóa dữ liệu cũ trong danh sách
             dsKhachHang.Clear();
             try
             {
+                // Đọc từng dòng trong file
                 foreach (string line in File.ReadLines(FileKH, Encoding.UTF8))
                 {
+                    //  Nếu dòng trống thì bỏ qua
                     if (string.IsNullOrWhiteSpace(line)) continue;
+
+                    // Mỗi phần tử cách nhau bởi dấu '|' sẽ được lưu vào mảng p
                     string[] p = line.Split('|');
+
+                    // Kiểm tra đủ phần tử rồi thêm vào danh sách
                     if (p.Length >= 4)
                         dsKhachHang.Add(new KhachHang { MaKH = p[0], TenKH = p[1], SoDienThoai = p[2], DiaChi = p[3] });
                 }
@@ -178,14 +207,23 @@ namespace QuanLyCuaHangSach.Services
         }
         public void DocNhanVien()
         {
+            // Nếu file không tồn tại thì thoát
             if (!File.Exists(FileNV)) return;
+
+            // Xóa dữ liệu cũ trong danh sách
             dsNhanVien.Clear();
             try
             {
+                // Đọc từng dòng trong file
                 foreach (string line in File.ReadLines(FileNV, Encoding.UTF8))
                 {
+                    //  Nếu dòng trống thì bỏ qua
                     if (string.IsNullOrWhiteSpace(line)) continue;
+
+                    // Mỗi phần tử cách nhau bởi dấu '|' sẽ được lưu vào mảng p
                     string[] p = line.Split('|');
+
+                    // Kiểm tra đủ phần tử rồi thêm vào danh sách
                     if (p.Length >= 5)
                         dsNhanVien.Add(new NhanVien { MaNV = p[0], TenNV = p[1], ChucVu = p[2], SoDienThoai = p[3], MaQL = p[4] });
                 }
@@ -194,26 +232,29 @@ namespace QuanLyCuaHangSach.Services
         }
         public void DocHoaDon()
         {
+            // Nếu file không tồn tại thì thoát
             if (!File.Exists(FileHD)) return;
+
+            // Xóa dữ liệu cũ trong danh sách
             dsHoaDon.Clear();
             try
             {
+                // Đọc từng dòng trong file
                 foreach (string line in File.ReadLines(FileHD, Encoding.UTF8))
                 {
                     if (string.IsNullOrWhiteSpace(line)) continue;
+
+                    // Mỗi phần tử cách nhau bởi dấu '|' sẽ được lưu vào mảng p
                     string[] p = line.Split('|');
+
+                    // Kiểm tra đủ phần tử rồi thêm vào danh sách
                     if (p.Length >= 5)
                     {
-                        HoaDon hd = new HoaDon
-                        {
-                            MaHD = p[0],
-                            MaKH = p[1],
-                            MaNV = p[2],
-                            SoDienThoai = p[3],
+                        dsHoaDon.Add(new HoaDon { MaHD = p[0], MaKH = p[1], MaNV = p[2], SoDienThoai = p[3],
+                            //ParseExact yêu cầu chuỗi phải khớp chính xác với định dạng
+                            //CultureInfo.InvariantCulture đảm bảo việc parse ngày giờ luôn ổn định, không bị ảnh hưởng bởi cài đặt hệ thống
                             NgayLap = DateTime.ParseExact(p[4], "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture),
-                            ChiTietHoaDon = new List<ChiTietHoaDon>()
-                        };
-                        dsHoaDon.Add(hd);
+                            ChiTietHoaDon = new List<ChiTietHoaDon>() });
                     }
                 }
             }
@@ -221,25 +262,25 @@ namespace QuanLyCuaHangSach.Services
         }
         public void DocChiTietHoaDon()
         {
+            // Nếu file không tồn tại thì thoát
             if (!File.Exists(FileCTHD)) return;
+
+            // Xóa dữ liệu cũ trong danh sách
             dsChiTietHoaDon.Clear();
             try
             {
+                // Đọc từng dòng trong file
                 foreach (string line in File.ReadLines(FileCTHD, Encoding.UTF8))
                 {
                     if (string.IsNullOrWhiteSpace(line)) continue;
+
+                    // Mỗi phần tử cách nhau bởi dấu '|' sẽ được lưu vào mảng p
                     string[] p = line.Split('|');
 
+                    // Kiểm tra đủ phần tử rồi thêm vào danh sách
                     if (p.Length >= 5)
                     {
-                        ChiTietHoaDon ct = new ChiTietHoaDon
-                        {
-                            MaHD = p[0],
-                            MaSach = p[1],
-                            TenSach = p[2],
-                            GiaBan = decimal.Parse(p[3]),
-                            SoLuong = int.Parse(p[4])
-                        };
+                        ChiTietHoaDon ct = new ChiTietHoaDon { MaHD = p[0], MaSach = p[1], TenSach = p[2], GiaBan = decimal.Parse(p[3]), SoLuong = int.Parse(p[4]) };
                         dsChiTietHoaDon.Add(ct);
 
                         // Ghép chi tiết vào đúng hóa đơn
@@ -248,16 +289,13 @@ namespace QuanLyCuaHangSach.Services
                             if (hd.MaHD == ct.MaHD)
                             {
                                 hd.ChiTietHoaDon.Add(ct);
-                                break; // tìm thấy thì thoát vòng lặp
+                                break;
                             }
                         }
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Lỗi đọc Chi Tiết Hoá Đơn: " + ex.Message);
-            }
+            catch { }
         }
     }
 }

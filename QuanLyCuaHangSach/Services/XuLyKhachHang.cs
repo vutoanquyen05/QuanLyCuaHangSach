@@ -13,9 +13,11 @@ namespace QuanLyCuaHangSach.Services
         private List<KhachHang> dsKhachHang;
         public XuLyKhachHang()
         {
-            dsKhachHang = new List<KhachHang>();
-            TruyCapDuLieu duLieu = TruyCapDuLieu.khoiTao();
-            this.dsKhachHang = duLieu.getDSKhachHang();
+            // Khởi tạo danh sách
+            this.dsKhachHang = new List<KhachHang>();
+
+            // Đổ dữ liệu từ TruyCapDuLieu vào danh sách
+            this.dsKhachHang = TruyCapDuLieu.khoiTao().getDSKhachHang();
         }
         public bool KiemTraMaKhachHang(string maKH)
         {
@@ -37,6 +39,8 @@ namespace QuanLyCuaHangSach.Services
         public bool Sua(KhachHang khachHangCu, KhachHang khachHangMoi)
         {
             if (khachHangCu == null || khachHangMoi == null) return false;
+
+            // Lấy vị trí của khách hàng cũ trong danh sách, nếu không có thì viTri = -1
             int viTri = dsKhachHang.IndexOf(khachHangCu);
             if (viTri != -1)
             {

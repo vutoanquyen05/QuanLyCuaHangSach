@@ -13,9 +13,11 @@ namespace QuanLyCuaHangSach.Services
         private List<NhanVien> dsNhanVien;
         public XuLyNhanVien()
         {
-            dsNhanVien = new List<NhanVien>();
-            TruyCapDuLieu duLieu = TruyCapDuLieu.khoiTao();
-            this.dsNhanVien = duLieu.getDSNhanVien();
+            // Khởi tạo danh sách
+            this.dsNhanVien = new List<NhanVien>();
+
+            // Đổ dữ liệu từ TruyCapDuLieu vào danh sách
+            this.dsNhanVien = TruyCapDuLieu.khoiTao().getDSNhanVien();
         }
         public bool KiemTraMaNhanVien(string maNV)
         {
@@ -37,6 +39,8 @@ namespace QuanLyCuaHangSach.Services
         public bool Sua(NhanVien nhanVienCu, NhanVien nhanVienMoi)
         {
             if (nhanVienCu == null || nhanVienMoi == null) return false;
+
+            // Lấy vị trí của nhân viên cũ trong danh sách, nếu không có thì viTri = -1
             int viTri = dsNhanVien.IndexOf(nhanVienCu);
             if (viTri != -1)
             {

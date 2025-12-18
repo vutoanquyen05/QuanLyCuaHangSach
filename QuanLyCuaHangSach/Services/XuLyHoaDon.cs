@@ -15,13 +15,15 @@ namespace QuanLyCuaHangSach.Services
         private List<Sach> dsSach;
         public XuLyHoaDon()
         {
-            dsHoaDon = new List<HoaDon>();
-            dsChiTietHoaDon = new List<ChiTietHoaDon>();
-            dsSach = new List<Sach>();
-            TruyCapDuLieu duLieu = TruyCapDuLieu.khoiTao();
-            this.dsHoaDon = duLieu.getDSHoaDon();
-            this.dsChiTietHoaDon = duLieu.getDSChiTietHoaDon();
-            this.dsSach = duLieu.getDSSach();
+            // Khởi tạo danh sách
+            this.dsHoaDon = new List<HoaDon>();
+            this.dsChiTietHoaDon = new List<ChiTietHoaDon>();
+            this.dsSach = new List<Sach>();
+
+            // Đổ dữ liệu từ TruyCapDuLieu vào danh sách
+            this.dsHoaDon = TruyCapDuLieu.khoiTao().getDSHoaDon();
+            this.dsChiTietHoaDon = TruyCapDuLieu.khoiTao().getDSChiTietHoaDon();
+            this.dsSach = TruyCapDuLieu.khoiTao().getDSSach();
         }
         public List<HoaDon> GetDSHoaDon()
         {
@@ -42,44 +44,38 @@ namespace QuanLyCuaHangSach.Services
             {
                 if (s.MaSach == maSach)
                 {
+                    // Kiểm tra đủ số lượng thì trừ rồi lưu dữ liệu
                     if (s.SoLuong >= soLuong)
                     {
                         s.SoLuong -= soLuong;
-
-                        // Lưu lại vào file sách ngay sau khi trừ
                         TruyCapDuLieu.khoiTao().LuuSach();
-
-                        return true; // cập nhật thành công
+                        return true;
                     }
                     else
-                        return false; // không đủ số lượng
+                        return false;
                 }
             }
-            return false; // không tìm thấy sách
+            return false;
         }
         public bool Them(HoaDon hoaDon)
         {
             if (hoaDon == null) return false;
 
-            // Kiểm tra trùng mã hóa đơn
             if (KiemTraMaHoaDon(hoaDon))
                 return false;
 
-            // Thêm hóa đơn vào danh sách
             this.dsHoaDon.Add(hoaDon);
 
-            // Thêm chi tiết và cập nhật kho
+            // Thêm chi tiết hoá đơn và cập nhật số lượng sách
             foreach (ChiTietHoaDon chiTiet in hoaDon.ChiTietHoaDon)
             {
                 chiTiet.MaHD = hoaDon.MaHD;
                 this.dsChiTietHoaDon.Add(chiTiet);
-
-                // Gọi hàm cập nhật số lượng sách
                 if (!CapNhatSoLuongSach(chiTiet.MaSach, chiTiet.SoLuong))
-                    return false; // thất bại nếu không đủ số lượng hoặc không tìm thấy sách
+                    return false;
             }
 
-            return true; // thành công
+            return true;
         }
     }
 }

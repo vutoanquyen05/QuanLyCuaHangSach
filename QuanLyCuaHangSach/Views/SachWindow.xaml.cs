@@ -50,71 +50,63 @@ namespace QuanLyCuaHangSach.Views
         private void btnThem_Click(object sender, RoutedEventArgs e)
         {
             // Kiểm tra nhập liệu
-            if (string.IsNullOrWhiteSpace(txtMaSach.Text)) 
-            { 
+            if (string.IsNullOrWhiteSpace(txtMaSach.Text))
                 MessageBox.Show("Vui lòng nhập mã sách");
-                return;
-            }
 
-            // Tạo đối tượng sách mới
             Sach sachMoi = new Sach(txtMaSach.Text, txtTenSach.Text, txtTenTG.Text, txtMaNXB.Text, decimal.Parse(txtGiaBan.Text), int.Parse(txtSoLuong.Text));
-
-            // Thực hiện thêm sách
             bool ketQuaThem = xuLySach.Them(sachMoi);
-            // Thông báo kết quả thêm
+
             if (ketQuaThem)
             {
                 MessageBox.Show("Thêm sách thành công!");
                 TruyCapDuLieu.khoiTao().LuuSach();
                 HienThiDSSach();
             }
-            else MessageBox.Show("Mã sách đã tồn tại");
+            else
+                MessageBox.Show("Mã sách đã tồn tại");
         }
 
         private void btnSua_Click(object sender, RoutedEventArgs e)
         {
-            // Kiểm tra xem có sách nào được chọn không
             if (dgvSach.SelectedItem is Sach sachCu)
             {
-                // Tạo đối tượng sách mới với thông tin đã sửa
                 Sach sachMoi = new Sach(txtMaSach.Text, txtTenSach.Text, txtTenTG.Text, txtMaNXB.Text, decimal.Parse(txtGiaBan.Text), int.Parse(txtSoLuong.Text));
-
-                // Thực hiện sửa sách
                 bool ketQuaSua = xuLySach.Sua(sachCu, sachMoi);
-                // Thông báo kết quả sửa
+
                 if (ketQuaSua)
                 {
                     MessageBox.Show("Sửa sách thành công!");
                     TruyCapDuLieu.khoiTao().LuuSach();
                     HienThiDSSach();
                 }
-                else MessageBox.Show("Sửa sách thất bại!");
+                else
+                    MessageBox.Show("Sửa sách thất bại!");
             }
-            else MessageBox.Show("Vui lòng chọn sách cần sửa!");
+            else
+                MessageBox.Show("Vui lòng chọn sách cần sửa!");
         }
 
         private void btnXoa_Click(object sender, RoutedEventArgs e)
         {
-            // Kiểm tra xem có sách nào được chọn không
             if (dgvSach.SelectedItem is Sach sach)
             {
-                // Thực hiện xóa sách
                 bool ketQuaXoa = xuLySach.Xoa(sach);
-                // Thông báo kết quả xóa
+
                 if (ketQuaXoa)
                 {
                     MessageBox.Show("Xóa sách thành công!");
                     TruyCapDuLieu.khoiTao().LuuSach();
                     HienThiDSSach();
                 }
-                else MessageBox.Show("Xóa sách thất bại!");
+                else
+                    MessageBox.Show("Xóa sách thất bại!");
             }
-            else MessageBox.Show("Vui lòng chọn sách cần xóa!");
+            else
+                MessageBox.Show("Vui lòng chọn sách cần xóa!");
         }
 
         private void btnLamMoi_Click(object sender, RoutedEventArgs e)
         {
-            // Xóa trắng các ô nhập liệu
             txtMaSach.Clear();
             txtTenSach.Clear();
             txtTenTG.Clear();
@@ -138,15 +130,14 @@ namespace QuanLyCuaHangSach.Views
             if (string.IsNullOrEmpty(maSach) && string.IsNullOrEmpty(tenSach))
                 HienThiDSSach();
 
-            // Lọc thủ công
             foreach (Sach s in dsSach)
             {
-                // Kiểm tra MaSach
+                // Lọc theo mã sách
                 if (!string.IsNullOrEmpty(maSach))
                     if (string.IsNullOrEmpty(s.MaSach) || s.MaSach.IndexOf(maSach, StringComparison.OrdinalIgnoreCase) < 0)
                         continue;
 
-                // Kiểm tra TenSach
+                // Lọc theo tên sách
                 if (!string.IsNullOrEmpty(tenSach))
                     if (string.IsNullOrEmpty(s.TenSach) || s.TenSach.IndexOf(tenSach, StringComparison.OrdinalIgnoreCase) < 0)
                         continue;
@@ -159,7 +150,6 @@ namespace QuanLyCuaHangSach.Views
 
         private void dgvNhanVien_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            // Hiển thị thông tin sách được chọn lên các ô nhập liệu
             if (dgvSach.SelectedItem is Sach select)
             {
                 txtMaSach.Text = select.MaSach;

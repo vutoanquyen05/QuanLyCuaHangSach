@@ -13,13 +13,11 @@ namespace QuanLyCuaHangSach.Services
         private List<Sach> dsSach;
         public XuLySach()
         {
-            dsSach = new List<Sach>();
-            TruyCapDuLieu duLieu = TruyCapDuLieu.khoiTao();
-            this.dsSach = duLieu.getDSSach();
-        }
-        public List<Sach> getDSSach()
-        {
-            return dsSach;
+            // Khởi tạo danh sách
+            this.dsSach = new List<Sach>();
+
+            // Đổ dữ liệu từ TruyCapDuLieu vào danh sách
+            this.dsSach = TruyCapDuLieu.khoiTao().getDSSach();
         }
         public bool KiemTraMaSach(string maSach)
         {
@@ -30,14 +28,19 @@ namespace QuanLyCuaHangSach.Services
         }
         public bool Them(Sach sach)
         {
-            if (KiemTraMaSach(sach.MaSach))
-                return false;
-            this.dsSach.Add(sach);
-            return true;
+            if (sach == null) return false;
+            if (!KiemTraMaSach(sach.MaSach))
+            {
+                dsSach.Add(sach);
+                return true;
+            }
+            return false;
         }
         public bool Sua(Sach sachCu, Sach sachMoi)
         {
             if (sachCu == null || sachMoi == null) return false;
+
+            // Lấy vị trí của sách cũ trong danh sách, nếu không có thì viTri = -1
             int viTri = dsSach.IndexOf(sachCu);
             if (viTri != -1)
             {

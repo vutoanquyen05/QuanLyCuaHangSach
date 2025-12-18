@@ -26,36 +26,39 @@ namespace QuanLyCuaHangSach.Views
         {
             InitializeComponent();
         }
-        private void window_Loaded(object sender, RoutedEventArgs e)
-        {
-            xuLyKhachHang = new XuLyKhachHang();
-            TruyCapDuLieu.khoiTao().DocKhachHang();
-            HienThiDSKhachHang();
-        }
+
         private void HienThiDSKhachHang()
         {
+            // Lấy danh sách khách hàng từ TruyCapDuLieu và hiển thị lên DataGrid
             List<KhachHang> dsKhachHang = TruyCapDuLieu.khoiTao().getDSKhachHang();
             dgvKhachHang.ItemsSource = null;
             dgvKhachHang.ItemsSource = dsKhachHang.ToList();
         }
 
+        private void window_Loaded(object sender, RoutedEventArgs e)
+        {
+            // Khởi tạo XuLyKhachHang và đọc dữ liệu khách hàng
+            xuLyKhachHang = new XuLyKhachHang();
+            TruyCapDuLieu.khoiTao().DocKhachHang();
+            HienThiDSKhachHang();
+        }
+
         private void btnThem_Click(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtMaKH.Text))
-            {
                 MessageBox.Show("Vui lòng nhập mã khách hàng");
-                return;
-            }
 
             KhachHang khachHangMoi = new KhachHang(txtMaKH.Text, txtTenKH.Text, txtSDT.Text, txtDiaChi.Text);
             bool ketQuaThem = xuLyKhachHang.Them(khachHangMoi);
+
             if (ketQuaThem)
             {
                 MessageBox.Show("Thêm khách hàng thành công!");
                 TruyCapDuLieu.khoiTao().LuuKhachHang();
                 HienThiDSKhachHang();
             }
-            else MessageBox.Show("Mã khách hàng đã tồn tại");
+            else
+                MessageBox.Show("Mã khách hàng đã tồn tại");
         }
 
         private void btnSua_Click(object sender, RoutedEventArgs e)
@@ -64,15 +67,18 @@ namespace QuanLyCuaHangSach.Views
             {
                 KhachHang khachHangMoi = new KhachHang(txtMaKH.Text, txtTenKH.Text, txtSDT.Text, txtDiaChi.Text);
                 bool ketQuaSua = xuLyKhachHang.Sua(khachHangCu, khachHangMoi);
+
                 if (ketQuaSua)
                 {
                     MessageBox.Show("Sửa khách hàng thành công!");
                     TruyCapDuLieu.khoiTao().LuuKhachHang();
                     HienThiDSKhachHang();
                 }
-                else MessageBox.Show("Sửa khách hàng thất bại!");
+                else
+                    MessageBox.Show("Sửa khách hàng thất bại!");
             }
-            else MessageBox.Show("Vui lòng chọn khách hàng cần sửa!");
+            else
+                MessageBox.Show("Vui lòng chọn khách hàng cần sửa!");
         }
 
         private void btnXoa_Click(object sender, RoutedEventArgs e)
@@ -80,15 +86,18 @@ namespace QuanLyCuaHangSach.Views
             if (dgvKhachHang.SelectedItem is KhachHang khachHang)
             {
                 bool ketQuaXoa = xuLyKhachHang.Xoa(khachHang);
+
                 if (ketQuaXoa)
                 {
                     MessageBox.Show("Xóa khách hàng thành công!");
                     TruyCapDuLieu.khoiTao().LuuKhachHang();
                     HienThiDSKhachHang();
                 }
-                else MessageBox.Show("Xóa khách hàng thất bại!");
+                else
+                    MessageBox.Show("Xóa khách hàng thất bại!");
             }
-            else MessageBox.Show("Vui lòng chọn khách hàng cần xóa!");
+            else
+                MessageBox.Show("Vui lòng chọn khách hàng cần xóa!");
         }
 
         private void btnLamMoi_Click(object sender, RoutedEventArgs e)
@@ -110,17 +119,17 @@ namespace QuanLyCuaHangSach.Views
             string hoTen = txtLocHoTen.Text != null ? txtLocHoTen.Text.Trim() : string.Empty;
             string sdt = txtLocSDT.Text != null ? txtLocSDT.Text.Trim() : string.Empty;
 
-            // Nếu không nhập gì thì hiển thị toàn bộ
             if (string.IsNullOrEmpty(hoTen) && string.IsNullOrEmpty(sdt))
                 HienThiDSKhachHang();
 
-            // Lọc thủ công
             foreach (KhachHang kh in dsKH)
             {
+                // Lọc theo họ tên
                 if (!string.IsNullOrEmpty(hoTen))
                     if (string.IsNullOrEmpty(kh.TenKH) || kh.TenKH.IndexOf(hoTen, StringComparison.OrdinalIgnoreCase) < 0)
                         continue;
 
+                // Lọc theo số điện thoại
                 if (!string.IsNullOrEmpty(sdt))
                     if (string.IsNullOrEmpty(kh.SoDienThoai) || kh.SoDienThoai.IndexOf(sdt, StringComparison.OrdinalIgnoreCase) < 0)
                         continue;

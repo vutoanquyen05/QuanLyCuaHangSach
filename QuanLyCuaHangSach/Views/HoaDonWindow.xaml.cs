@@ -44,6 +44,8 @@ namespace QuanLyCuaHangSach.Views
 
         private void window_Loaded(object sender, RoutedEventArgs e)
         {
+            xuLyHoaDon = new XuLyHoaDon();
+
             // Thiết lập giá trị mặc định cho DatePicker
             DateTime today = DateTime.Now;
             dtpTuNgay.SelectedDate = new DateTime(today.Year, today.Month, 1); // Ngày 1 đầu tháng
@@ -54,8 +56,6 @@ namespace QuanLyCuaHangSach.Views
             TruyCapDuLieu.khoiTao().DocHoaDon();
             TruyCapDuLieu.khoiTao().DocChiTietHoaDon();
 
-            xuLyHoaDon = new XuLyHoaDon();
-
             // Hiển thị danh sách hóa đơn
             List<HoaDon> dsHoaDon = TruyCapDuLieu.khoiTao().getDSHoaDon();
             HienThiDSHoaDon(dsHoaDon);
@@ -64,17 +64,18 @@ namespace QuanLyCuaHangSach.Views
         private void btnHienThiTatCa_Click(object sender, RoutedEventArgs e)
         {
             DateTime today = DateTime.Now;
-            dtpTuNgay.SelectedDate = new DateTime(today.Year, today.Month, 1); // Ngày 1 đầu tháng
+
+            // Từ ngày 1 đầu tháng đến ngày hiện tại
+            dtpTuNgay.SelectedDate = new DateTime(today.Year, today.Month, 1);
             dtpDenNgay.SelectedDate = today;
             HienThiDSHoaDon(xuLyHoaDon.GetDSHoaDon());
         }
 
         private void btnLoc_Click(object sender, RoutedEventArgs e)
         {
-            // Lọc hóa đơn theo khoảng thời gian
             if (dtpTuNgay.SelectedDate != null && dtpDenNgay.SelectedDate != null)
             {
-                DateTime tuNgay = dtpTuNgay.SelectedDate.Value.Date; // Lấy phần ngày, bỏ phần giờ (00:00:00)
+                DateTime tuNgay = dtpTuNgay.SelectedDate.Value.Date; // Lấy phần ngày, bỏ phần giờ
                 DateTime denNgay = dtpDenNgay.SelectedDate.Value.Date.AddDays(1).AddSeconds(-1); // Lấy đến 23:59:59 của ngày kết thúc
 
                 // Lọc danh sách và hiển thị kết quả lên DataGrid

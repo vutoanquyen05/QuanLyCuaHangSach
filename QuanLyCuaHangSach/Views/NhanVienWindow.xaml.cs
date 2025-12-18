@@ -27,37 +27,39 @@ namespace QuanLyCuaHangSach.Views
             InitializeComponent();
         }
 
-        private void window_Loaded(object sender, RoutedEventArgs e)
-        {
-            xuLyNhanVien = new XuLyNhanVien();
-            TruyCapDuLieu.khoiTao().DocNhanVien();
-            HienThiDSNhanVien();
-        }
-
         private void HienThiDSNhanVien()
         {
+            // Lấy danh sách nhân viên từ TruyCapDuLieu và hiển thị lên DataGrid
             List<NhanVien> dsNhanVien = TruyCapDuLieu.khoiTao().getDSNhanVien();
             dgvNhanVien.ItemsSource = null;
             dgvNhanVien.ItemsSource = dsNhanVien.ToList();
         }
 
+        private void window_Loaded(object sender, RoutedEventArgs e)
+        {
+            // Khởi tạo XuLyNhanVien và đọc dữ liệu nhân viên
+            xuLyNhanVien = new XuLyNhanVien();
+            TruyCapDuLieu.khoiTao().DocNhanVien();
+            HienThiDSNhanVien();
+        }
+
         private void btnThem_Click(object sender, RoutedEventArgs e)
         {
+            // Kiểm tra nhập liệu
             if (string.IsNullOrWhiteSpace(txtMaNV.Text))
-            {
                 MessageBox.Show("Vui lòng nhập mã nhân viên");
-                return;
-            }
 
             NhanVien nhanVienMoi = new NhanVien(txtMaNV.Text, txtTenNV.Text, cboChucVu.Text, txtSDT.Text, txtMaQL.Text);
             bool ketQuaThem = xuLyNhanVien.Them(nhanVienMoi);
+
             if (ketQuaThem)
             {
                 MessageBox.Show("Thêm nhân viên thành công!");
                 TruyCapDuLieu.khoiTao().LuuNhanVien();
                 HienThiDSNhanVien();
             }
-            else MessageBox.Show("Mã nhân viên đã tồn tại");
+            else
+                MessageBox.Show("Mã nhân viên đã tồn tại");
         }
 
         private void btnSua_Click(object sender, RoutedEventArgs e)
@@ -66,15 +68,18 @@ namespace QuanLyCuaHangSach.Views
             {
                 NhanVien nhanVienMoi = new NhanVien(txtMaNV.Text, txtTenNV.Text, cboChucVu.Text, txtSDT.Text, txtMaQL.Text);
                 bool ketQuaSua = xuLyNhanVien.Sua(nhanVienCu, nhanVienMoi);
+
                 if (ketQuaSua)
                 {
                     MessageBox.Show("Sửa nhân viên thành công!");
                     TruyCapDuLieu.khoiTao().LuuNhanVien();
                     HienThiDSNhanVien();
                 }
-                else MessageBox.Show("Sửa nhân viên thất bại!");
+                else
+                    MessageBox.Show("Sửa nhân viên thất bại!");
             }
-            else MessageBox.Show("Vui lòng chọn nhân viên cần sửa!");
+            else
+                MessageBox.Show("Vui lòng chọn nhân viên cần sửa!");
         }
 
         private void btnXoa_Click(object sender, RoutedEventArgs e)
@@ -88,9 +93,11 @@ namespace QuanLyCuaHangSach.Views
                     TruyCapDuLieu.khoiTao().LuuNhanVien();
                     HienThiDSNhanVien();
                 }
-                else MessageBox.Show("Xóa nhân viên thất bại!");
+                else
+                    MessageBox.Show("Xóa nhân viên thất bại!");
             }
-            else MessageBox.Show("Vui lòng chọn nhân viên cần xóa!");
+            else
+                MessageBox.Show("Vui lòng chọn nhân viên cần xóa!");
         }
 
         private void btnLamMoi_Click(object sender, RoutedEventArgs e)
@@ -117,7 +124,6 @@ namespace QuanLyCuaHangSach.Views
             if (string.IsNullOrEmpty(hoTen) && (string.IsNullOrEmpty(chucVu) || chucVu == "Tất cả"))
                 HienThiDSNhanVien();
 
-            // Lọc thủ công
             foreach (NhanVien nv in dsNV)
             {
                 // Lọc theo họ tên
@@ -136,7 +142,6 @@ namespace QuanLyCuaHangSach.Views
             // Gán kết quả vào DataGrid
             dgvNhanVien.ItemsSource = dsKetQua;
         }
-
 
         private void dgvNhanVien_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
